@@ -7,3 +7,5 @@ pylint-django==2.1.0
 social-auth-app-django==4.0.0
 social-auth-core==3.3.3
 virtualenv==20.2.1
+typepy==1.1.1
+typing-extensions==3.7.4.3
