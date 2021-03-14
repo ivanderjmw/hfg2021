@@ -28,7 +28,6 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     
-
     def get_full_name(self):
         full_name: str = f"{self.first_name} {self.last_name}"
         return full_name.strip()
@@ -55,10 +54,23 @@ class Tags(models.Model):
     name = models.TextField(
         blank=False
     )
+    details = models.TextField(
+        blank=True
+    )
+    magnitude = models.SmallIntegerField()
 
 class Assets(models.Model):
     name = models.TextField(
         blank=False
+    )
+    details = models.TextField(
+        blank=True
+    )
+    address = models.TextField(
+        blank=True
+    )
+    contact = models.TextField(
+        blank=True
     )
     rating = models.SmallIntegerField()
     # class Meta:
@@ -69,6 +81,25 @@ class Institutions(models.Model):
     name = models.TextField(
         blank=False
     )
+    details = models.TextField(
+        blank=True
+    )
+    address = models.TextField(
+        blank=True
+    )
+    contact = models.TextField(
+        blank=True
+    )
+    site = models.TextField(
+        blank=True
+    )
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=127,
+        blank=False,
+        unique=False,
+    )
+    rating = models.SmallIntegerField()
 # --------------------- Relationships -------------------
 
 class Strengths(models.Model):
