@@ -72,7 +72,7 @@ class Assets(models.Model):
     contact = models.TextField(
         blank=True
     )
-    rating = models.SmallIntegerField()
+    rating = models.FloatField()
     # class Meta:
     #     unique_fields = ('name', 'rating',)
     
@@ -101,7 +101,8 @@ class Institutions(models.Model):
     )
     rating = models.SmallIntegerField()
 # --------------------- Relationships -------------------
-
+class Associations(models.Model):
+    
 class Strengths(models.Model):
     stakeholder = models.ManyToManyField(
         Stakeholders, related_name='s_stakeholder')
