@@ -7,17 +7,30 @@
 {% endblock %}
 
 {% block content %}
-Hey this is text.
-<br/>
+<h1>Hey this is text.</h1>
 
-<div>
-    <ul>
-        <li id="draggable" class="ui-state-highlight">Text</li>
-    </ul>
-    
-
-    <ul id="sortable">
-        <li>an item</li>
-    </ul>
+<div class="row mt-5">
+    <div class="col-6">
+        <h2>StakeHolders</h2>
+        <ul class="list-group">
+            <li id="draggable-0" class="list-group-item">Workers</li>
+            <li id="draggable-1" class="list-group-item">Student</li>
+            <li id="draggable-2" class="list-group-item">Police</li>
+        </ul>
+    </div>
+    <div class="col-6">
+        <h2>Institution 1</h2>
+        <ul id="sortable-0" class="list-group sortable">
+            <li class="list-group-item">A</li>
+        </ul>
+        <h2>Institution 2</h2>
+        <ul id="sortable-1" class="list-group sortable">
+            <li class="list-group-item">B</li>
+        </ul>
+        <h2>Institution 3</h2>
+        <ul id="sortable-2" class="list-group sortable">
+            <li class="list-group-item">C</li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
