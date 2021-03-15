@@ -6,3 +6,6 @@ from django.shortcuts import render
 # Homepage before login
 def landing(request: HttpRequest):
     return render(request=request, template_name="abcd/landing.html")
+
+def home(request: HttpRequest):
+    return render(request=request, template_name="abcd/home.html")
