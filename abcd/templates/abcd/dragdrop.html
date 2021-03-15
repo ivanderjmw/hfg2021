@@ -1,0 +1,23 @@
+{% extends "abcd/base.html" %}
+
+{% load static %}
+
+{% block js %}
+<script src="{% static 'abcd/js/dragdrop.js' %}" ></script>
+{% endblock %}
+
+{% block content %}
+Hey this is text.
+<br/>
+
+<div>
+    <ul>
+        <li id="draggable" class="ui-state-highlight">Text</li>
+    </ul>
+    
+
+    <ul id="sortable">
+        <li>an item</li>
+    </ul>
+</div>
+{% endblock %}
