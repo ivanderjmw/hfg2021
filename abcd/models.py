@@ -102,7 +102,11 @@ class Institutions(models.Model):
     rating = models.SmallIntegerField()
 # --------------------- Relationships -------------------
 class Associations(models.Model):
-    
+    stakeholder1 = models.ManyToManyField(
+        Stakeholders, related_name='a_stakeholder1')
+    stakeholder2 = models.ManyToManyField(
+        Stakeholders, related_name='a_stakeholder2')
+
 class Strengths(models.Model):
     stakeholder = models.ManyToManyField(
         Stakeholders, related_name='s_stakeholder')

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ABCD</title>
+    <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta name="google-signin-client_id" content="687813947855-ck4ck4d49sojolvdbrsni5uu109idjps.apps.googleusercontent.com">
+    <meta property="description" content="NUS ABCD helper" data-react-helmet="true">
+    <script src="https://unpkg.com/gojs/release/go-debug.js"></script>
+</head>
+<body>
+<script src="https://unpkg.com/bpmn-js@8.2.1/dist/bpmn-viewer.development.js"></script>
+<!-- necessary stylesheets -->
+<link rel="stylesheet" href="https://unpkg.com/bpmn-js@8.2.1/dist/assets/diagram-js.css" />
+<link rel="stylesheet" href="https://unpkg.com/bpmn-js@8.2.1/dist/assets/bpmn-font/css/bpmn.css" />
+<script src="https://unpkg.com/bpmn-js@8.2.1/dist/bpmn-modeler.development.js"></script>
+This is the body.
+<div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
+<script>
+   var diagram = new go.Diagram("myDiagramDiv");
+      var $ = go.GraphObject.make;
+      diagram.nodeTemplate =
+        $(go.Node, "Auto",  // the Shape automatically fits around the TextBlock
+          $(go.Shape, "RoundedRectangle",  // use this kind of figure for the Shape
+            // bind Shape.fill to Node.data.color
+            new go.Binding("fill", "color")),
+          $(go.TextBlock,
+            { margin: 3 },  // some room around the text
+            // bind TextBlock.text to Node.data.key
+            new go.Binding("text", "key"))
+        );
+
+      // the Model holds only the essential information describing the diagram
+      diagram.model = new go.GraphLinksModel(
+      [ // a JavaScript Array of JavaScript objects, one per node;
+        // the "color" property is added specifically for this app
+        { key: "Alpha", color: "lightblue" },
+        { key: "Beta", color: "orange" },
+        { key: "Gamma", color: "lightgreen" },
+        { key: "Delta", color: "pink" }
+      ],
+      [ // a JavaScript Array of JavaScript objects, one per link
+        { from: "Alpha", to: "Beta" },
+        { from: "Alpha", to: "Gamma" },
+        { from: "Beta", to: "Beta" },
+        { from: "Gamma", to: "Delta" },
+        { from: "Delta", to: "Alpha" }
+      ]);
+
+</script>
+
+</body>
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<script language="JavaScript" src="{% static 'abcd/js/jquery.js' %}"></script>
+<script src="{% static 'abcd/js/popper.min.js' %}"></script>
+<script src="{% static 'abcd/js/bootstrap.min.js' %}" ></script>
+</body>
+
+
+</html>
