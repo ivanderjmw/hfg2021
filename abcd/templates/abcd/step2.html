@@ -2,5 +2,17 @@
 
 {% block content %}
 <h1>Who are the individuals?</h1>
+<form method="post" id="addIndividualForm" onsubmit = "return true;">
+<div class="form-group">
+{% csrf_token %}
+  <input type="text" class="form-control" name="individual_name" placeholder="Enter stakeholder's name">
+  <input class="btn btn-primary" type="submit" value=Add>
+</div>
 
+<div class="form-group">
+{% csrf_token %}
+  <input type="text" class="form-control" name="tag_name" placeholder="Enter quality">
+  <input class="btn btn-primary" type="submit" value=Add>
+</div>
+</form>
 {% endblock %}

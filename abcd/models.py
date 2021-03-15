@@ -46,7 +46,7 @@ class Stakeholders(models.Model):
     #Many-to-one user
     owner = models.ForeignKey(
         Profile,
-        blank=False,
+        blank=True,
         on_delete=models.CASCADE
     )
 
@@ -59,6 +59,7 @@ class Tags(models.Model):
     )
     magnitude = models.SmallIntegerField()
 
+#refering to physical asset not qualities like Kindness
 class Assets(models.Model):
     name = models.TextField(
         blank=False
@@ -100,6 +101,13 @@ class Institutions(models.Model):
         unique=False,
     )
     rating = models.SmallIntegerField()
+
+
+class Community(models.Model):
+    location = models.TextField(
+        blank=False
+    )
+
 # --------------------- Relationships -------------------
 class Associations(models.Model):
     stakeholder1 = models.ManyToManyField(
@@ -127,7 +135,7 @@ class Owns(models.Model):
     asset = models.ManyToManyField(Assets, related_name='o_asset')
 
 class Possesses(models.Model):
-    institution = models.ManyToManyField(Institutions, related_name='p_institution')
+    stakeholder = models.ManyToManyField(Institutions, related_name='p_stakeholder')
     asset = models.ManyToManyField(Assets, related_name='p_asset')
 
 class Belongs(models.Model):
