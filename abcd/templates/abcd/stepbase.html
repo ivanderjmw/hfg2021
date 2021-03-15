@@ -6,6 +6,7 @@
     <title>ABCD</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'abcd/css/style.css' %}">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta name="google-signin-client_id" content="687813947855-ck4ck4d49sojolvdbrsni5uu109idjps.apps.googleusercontent.com">
@@ -25,11 +26,11 @@
     <div class="mx-auto">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="{% url 'step1' %}">1</a></li>
-        <li class="page-item"><a class="page-link" href="{% url 'step2' %}">2</a></li>
-        <li class="page-item"><a class="page-link" href="{% url 'step3' %}">3</a></li>
-        <li class="page-item"><a class="page-link" href="{% url 'step4' %}">4</a></li>
-        <li class="page-item"><a class="page-link" href="{% url 'results' %}">Result</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn " href="{% url 'step1' %}">1</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step2' %}">2</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step3' %}">3</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step4' %}">4</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'results' %}">Result</a></li>
       </ul>
     </nav>
     </div>

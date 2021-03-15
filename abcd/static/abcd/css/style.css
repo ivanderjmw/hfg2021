@@ -1,0 +1,7 @@
+@media screen and (min-width: 800px){
+  .pagination-btn {
+    border-width: 2px;
+  }
+}
+
+@media screen and (max-width: 800px){}
