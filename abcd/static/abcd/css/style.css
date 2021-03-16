@@ -1,3 +1,21 @@
+body {
+  background-color: #0142FF;
+  background-image: url('../Intro.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;  
+}
+
+.btn {
+  position: fixed;
+  bottom: 10%;
+  left: 6em;
+}
+
+#step1{
+  background-color:#FFD214;
+}
+
 @media screen and (min-width: 800px){
   .pagination-btn {
     border-width: 2px;

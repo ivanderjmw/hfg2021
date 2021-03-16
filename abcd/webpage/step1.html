@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script></script>
+    <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'abcd/css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet"> 
+<style>
+    .text-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid black;
+  font-size: 20px;
+  height: 50px;
+  outline: none !important;
+  width: 280px;
+  padding-bottom: 4px;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+    }
+
+  h2 {
+    font-family:'Rubik';
+    font-weight:regular
+  }
+.screen1 {
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  }
+
+  .next-arrow {
+    position: absolute;
+    transform: translate(40vw, 0%) rotate(-90deg);
+    width: 4.5vmax;
+    height: 4.5vmax;
+    cursor: pointer;
+    z-index: 101;
+    opacity: 0.8;
+  }
+
+</style>
+</head>
+<body id='step1' style='background-color: #FFD214;'>
+    <h2 style='text-align: center;'>Connecting with your community..</h2>
+    <form class="form-inline" style='text-align: center; font-family: Rubik, sans-serif; font-size: 30px;'>
+        <div class="form-group mb-2">
+          <label for="staticEmail2" class="sr-only">I am at </label>
+          <input class="text-input" type="text" placeholder=" ">        </div>
+    </form>
+    <img class='screen1' src="../static/abcd/screen1.svg" alt="1bg">
+
+  </body>
+</html>
