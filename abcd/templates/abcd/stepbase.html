@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ABCD</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'abcd/css/style.css' %}">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta name="google-signin-client_id" content="687813947855-ck4ck4d49sojolvdbrsni5uu109idjps.apps.googleusercontent.com">
+    {% block header_files %}
+    {% endblock %}
+    <meta property="description" content="NUS ABCD helper" data-react-helmet="true">
+</head>
+
+<body>
+
+<div class="container">
+  <div class="border p-5 mt-5">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div class="row mt-5">
+    <div class="mx-auto">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link m-4 pagination-btn " href="{% url 'step1' %}">1</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step2' %}">2</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step3' %}">3</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'step4' %}">4</a></li>
+        <li class="page-item"><a class="page-link m-4 pagination-btn" href="{% url 'results' %}">Result</a></li>
+      </ul>
+    </nav>
+    </div>
+  </div>
+</body>
+</html>  
+</div>
