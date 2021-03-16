@@ -1,3 +1,15 @@
+body {
+  background-color: #4BED93;
+}
+
+.img-screen5 {
+  position: relative;
+  top: 10vh;
+  left: 40vw;
+  width: 800px;
+  z-index: 0;
+}
+
 .list-group {
   width: 200px;
 }
@@ -6,10 +18,10 @@
 }
 .sortable {
   min-height: 50px;
-  width: 200px;
+  width: 100%;
 }
 .placeholder {
-  background-color:rgb(45, 235, 137);
+  background-color:rgba(72, 72, 72, 0.201);
   opacity: 20%;
   list-style: none;
   height: 50px;
@@ -40,3 +52,22 @@
 }
 
 @media screen and (max-width: 800px){}
+
+.trash {
+  background-color: #ff575748;
+  visibility: hidden;
+  border-width: 5px!important;
+}
+
+.main {
+  z-index: 100;
+  position: absolute;
+  width:100%;
+}
+.border-width-5 {
+  border-width: 5px!important;
+}
+
+.institution-body h3 {
+  color: white;
+}
