@@ -7,30 +7,27 @@
 {% endblock %}
 
 {% block content %}
-<h1>Hey this is text.</h1>
 
-<div class="row mt-5">
-    <div class="col-6">
-        <h2>StakeHolders</h2>
-        <ul class="list-group">
-            <li id="draggable-0" class="list-group-item">Workers</li>
-            <li id="draggable-1" class="list-group-item">Student</li>
-            <li id="draggable-2" class="list-group-item">Police</li>
-        </ul>
-    </div>
-    <div class="col-6">
-        <h2>Institution 1</h2>
-        <ul id="sortable-0" class="list-group sortable">
-            <li class="list-group-item">A</li>
-        </ul>
-        <h2>Institution 2</h2>
-        <ul id="sortable-1" class="list-group sortable">
-            <li class="list-group-item">B</li>
-        </ul>
-        <h2>Institution 3</h2>
-        <ul id="sortable-2" class="list-group sortable">
-            <li class="list-group-item">C</li>
-        </ul>
+
+<div class="container">
+    <h1>Just a little bit of more information needed</h1>
+    <div class="row mt-5">
+        <div class="col-6">
+            <div class="container">
+                <h2>Institutions</h2>
+                <div class="container institutions-container">
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="container">
+                <h2>StakeHolders</h2>
+                <ul class="list-group stakeholders-list-group">
+                </ul>
+            </div>
+            <div class="trash container mt-5 m-3 p-5 text-center"></div>
+        </div>
+        
     </div>
 </div>
 {% endblock %}

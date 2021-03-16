@@ -9,8 +9,20 @@
 }
 
 .list-group {
-  width: 100px;
+  width: 200px;
 }
 .list-group-item {
-  width: 100px;
+  width: 200px;
+}
+.sortable {
+  min-height: 50px;
+  width: 200px;
+}
+.placeholder {
+  background-color:rgb(45, 235, 137);
+  opacity: 20%;
+  list-style: none;
+  height: 50px;
+  width: 200px;
+
 }
