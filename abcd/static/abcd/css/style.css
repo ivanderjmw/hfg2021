@@ -1,47 +1,24 @@
-#step1{
-  background-color:#FFD214;
-}
-
 @media screen and (min-width: 800px){
-  .pagination-btn {
-    border-width: 2px;
+    .pagination-btn {
+      border-width: 2px;
+    }
+  
+    .google-btn {
+      font-size: 26px;
+      display: inline-block;
+      background: white;
+      color: #444;
+      width: 280px;
+      border-radius: 5px;
+      border: thin solid #888;
+      box-shadow: 1px 1px 1px grey;
+      white-space: nowrap;
+    }
+    .google-icon {
+      height: 32px;
+      padding-right: 8px;
+      padding-bottom: 8px;
+    }
   }
-
-  .google-btn {
-    font-size: 26px;
-    display: inline-block;
-    background: white;
-    color: #444;
-    width: 280px;
-    border-radius: 5px;
-    border: thin solid #888;
-    box-shadow: 1px 1px 1px grey;
-    white-space: nowrap;
-  }
-  .google-icon {
-    height: 32px;
-    padding-right: 8px;
-    padding-bottom: 8px;
-  }
-}
-
-@media screen and (max-width: 800px){}
-
-.trash {
-  background-color: #ff575748;
-  visibility: hidden;
-  border-width: 5px!important;
-}
-
-.main {
-  z-index: 100;
-  position: absolute;
-  width:100%;
-}
-.border-width-5 {
-  border-width: 5px!important;
-}
-
-.institution-body h3 {
-  color: white;
-}
+  
+  @media screen and (max-width: 800px){}
