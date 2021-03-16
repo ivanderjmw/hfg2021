@@ -1,33 +1,21 @@
 body {
-  background-color: #4BED93;
+  background-color: #0142FF;
+  background-image: url('../Intro.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;  
 }
 
-.img-screen5 {
-  position: relative;
-  top: 10vh;
-  left: 40vw;
-  width: 800px;
-  z-index: 0;
+.btn {
+  position: fixed;
+  bottom: 10%;
+  left: 6em;
 }
 
-.list-group {
-  width: 200px;
+#step1{
+  background-color:#FFD214;
 }
-.list-group-item {
-  width: 200px;
-}
-.sortable {
-  min-height: 50px;
-  width: 100%;
-}
-.placeholder {
-  background-color:rgba(72, 72, 72, 0.201);
-  opacity: 20%;
-  list-style: none;
-  height: 50px;
-  width: 200px;
 
-}
 @media screen and (min-width: 800px){
   .pagination-btn {
     border-width: 2px;

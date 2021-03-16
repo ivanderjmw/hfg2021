@@ -2,5 +2,42 @@
 
 {% block content %}
 <h1>Here's your connection graph</h1>
+<button onclick="gen()">Click me</button>
+<div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
+<div id="storage" value="{{data}}">
+<script>
+  function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
+    return null;
+  }
+   var diagram = new go.Diagram("myDiagramDiv");
+      var $ = go.GraphObject.make;
+      diagram.nodeTemplate =
+        $(go.Node, "Auto",  // the Shape automatically fits around the TextBlock
+          $(go.Shape, "RoundedRectangle",  // use this kind of figure for the Shape
+            // bind Shape.fill to Node.data.color
+            new go.Binding("fill", "color")),
+          $(go.TextBlock,
+            { margin: 3 },  // some room around the text
+            // bind TextBlock.text to Node.data.key
+            new go.Binding("text", "key"))
+        );
 
+    diagram.linkTemplate =
+      $(go.Link,       // the whole link panel
+        $(go.Shape)  // the link shape, default black stroke
+    );
+    text = document.getElementById('storage').getAttribute('value');
+    console.log(text)
+    json = JSON.parse(text)
+    diagram.model = go.Model.fromJson(json);
+
+  function gen() {
+    text = document.getElementById('storage').getAttribute('value');
+    console.log(String(text));
+    json = JSON.parse(text)
+    console.log(json);
+    //console.log(diagram.model.toJson());
+    return null;
+  }
+</script>
 {% endblock %}

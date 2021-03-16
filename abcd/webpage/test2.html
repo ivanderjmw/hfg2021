@@ -24,6 +24,7 @@ This is the body.
   function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
     return null;
   }
+  
    var diagram = new go.Diagram("myDiagramDiv");
       var $ = go.GraphObject.make;
       diagram.nodeTemplate =
@@ -37,36 +38,78 @@ This is the body.
             new go.Binding("text", "key"))
         );
 
-    diagram.linkTemplate =
-      $(go.Link,       // the whole link panel
-        $(go.Shape)  // the link shape, default black stroke
-      );
+      diagram.linkTemplate =
+        $(go.Link,       // the whole link panel
+          $(go.Shape)  // the link shape, default black stroke
+        );
+        myDiagram.nodeTemplate =
+        $("Node", "Auto",
+          {
+            locationSpot: go.Spot.Center,
+            layerName: "Background"
+          },  // always have regular nodes behind Links
+          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+          $("Shape", "RoundedRectangle",
+            {
+              fill: "white", stroke: null,
+              portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer"
+            },
+            new go.Binding("fill", "color")),
+          $("TextBlock",
+            { margin: 8 },  // make some extra space for the shape around the text
+            new go.Binding("text", "key"))  // the label shows the node data's key
+        );
 
+    var data = { "class": "go.GraphLinksModel",
+  "linkLabelKeysProperty": "labelKeys",
+  "nodeDataArray": [
+{"key":"Alpha", "color":"lightblue", "loc":"29 14"},
+{"key":"Beta", "color":"orange", "loc":"129 14"},
+{"key":"Gamma", "color":"lightgreen", "loc":"29 106"},
+{"key":"Delta", "color":"pink", "loc":"129 106"},
+{"key":"A-B", "category":"LinkLabel" },
+{"key":"G-D", "category":"LinkLabel" },
+{"key":"A-G", "category":"LinkLabel" },
+{"key":"A-G-D", "category":"LinkLabel" },
+{"key":"A-B-G-D", "category":"LinkLabel" }
+ ],
+  "linkDataArray": [
+{"from":"Alpha", "to":"Beta", "labelKeys":[ "A-B" ]},
+{"from":"Gamma", "to":"Delta", "labelKeys":[ "G-D" ]},
+{"from":"Alpha", "to":"Gamma", "labelKeys":[ "A-G" ]},
+{"from":"Alpha", "to":"G-D", "labelKeys":[ "A-G-D" ], "category":"linkToLink"},
+{"from":"A-B", "to":"G-D", "labelKeys":[ "A-B-G-D" ], "category":"linkToLink"}
+ ]}
+      
+    console.log(data);
+    diagram.model = go.Model.fromJson(data);
 
   function gen() {
     return diagram.model.toJson();
   }
   function gen2() {
-    var data = {"class": "GraphLinksModel",
-    "linkLabelKeysProperty": "labelKeys",
-    "nodeDataArray": [
-        {"key": "Alpha", "color": "lightblue", "loc": "29 14"},
-        {"key": "Beta", "color": "orange", "loc": "145 -5"},
-        {"key": "Gamma", "color": "lightgreen", "loc": "29 106"},
-        {"key": "Delta", "color": "pink", "loc": "129 106"}
-    ],
-    "linkDataArray": [
-        {"from": "Alpha", "to": "Beta",
-            "labelKeys": ["A-B"]},
-        {"from": "Gamma", "to": "Delta",
-            "labelKeys": ["G-D"]},
-        {"from": "Alpha", "to": "Gamma",
-            "labelKeys": ["A-G"]},
-        {"from": "Beta", "to": "Gamma",
-            "labelKeys": [-8], "category":""},
-        {"from": "Beta", "to": "Delta", "labelKeys": [-5]},
-        {"from": "Alpha", "to": "Delta", "labelKeys": [-6]}
-    ]}
+    var data = { "class": "go.GraphLinksModel",
+  "linkLabelKeysProperty": "labelKeys",
+  "nodeDataArray": [
+{"key":"Alpha", "color":"lightblue", "loc":"29 14"},
+{"key":"Beta", "color":"orange", "loc":"129 14"},
+{"key":"Gamma", "color":"lightgreen", "loc":"29 106"},
+{"key":"Delta", "color":"pink", "loc":"129 106"},
+{"key":"A-B", "category":"LinkLabel" },
+{"key":"G-D", "category":"LinkLabel" },
+{"key":"A-G", "category":"LinkLabel" },
+{"key":"A-G-D", "category":"LinkLabel" },
+{"key":"A-B-G-D", "category":"LinkLabel" }
+ ],
+  "linkDataArray": [
+{"from":"Alpha", "to":"Beta", "labelKeys":[ "A-B" ]},
+{"from":"Gamma", "to":"Delta", "labelKeys":[ "G-D" ]},
+{"from":"Alpha", "to":"Gamma", "labelKeys":[ "A-G" ]},
+{"from":"Alpha", "to":"G-D", "labelKeys":[ "A-G-D" ], "category":"linkToLink"},
+{"from":"A-B", "to":"G-D", "labelKeys":[ "A-B-G-D" ], "category":"linkToLink"}
+ ]}
+      
+    console.log(data);
     diagram.model = go.Model.fromJson(data);
     return diagram.model;
   } 

@@ -9,43 +9,12 @@
   <input class="btn btn-primary" type="submit" value=Add>
 </div>
 </form>
-<form method="post" id="addQualityForm" onsubmit = "return true;">
-<div class="form-group">
-{% csrf_token %}
-  <input type="text" class="form-control" name="tag_name" placeholder="Enter quality">
-  <input class="btn btn-primary" type="submit" value=Add>
-</div>
-</form>
+  <form action="" method="POST" >
+    {% csrf_token %}
+    {{ form2.as_p }}
+  <button type="submit" name="htmlsubmitbutton2">Add</button>
+  </form>
 
 
-<button onclick="gen()">Click me</button>
-<div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
-<script>
-  function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
-    return null;
-  }
-   var diagram = new go.Diagram("myDiagramDiv");
-      var $ = go.GraphObject.make;
-      diagram.nodeTemplate =
-        $(go.Node, "Auto",  // the Shape automatically fits around the TextBlock
-          $(go.Shape, "RoundedRectangle",  // use this kind of figure for the Shape
-            // bind Shape.fill to Node.data.color
-            new go.Binding("fill", "color")),
-          $(go.TextBlock,
-            { margin: 3 },  // some room around the text
-            // bind TextBlock.text to Node.data.key
-            new go.Binding("text", "key"))
-        );
 
-    diagram.linkTemplate =
-      $(go.Link,       // the whole link panel
-        $(go.Shape)  // the link shape, default black stroke
-      );
-
-
-  function gen() {
-    console.log(diagram.model.toJson());
-    return null;
-  }
-</script>
 {% endblock %}
