@@ -50,7 +50,7 @@ function initDragDrop() {
     }
     const colElement = $("<div class='col'></div>");
     colElement.addClass("institution-body");
-    colElement.addClass(["border", "border-dark", "rounded", "m-2", "p-2"]);
+    colElement.addClass(["border", "border-width-5", "border-white", "rounded", "m-2", "p-2"]);
 
     const nameElement = $("<h3></h3>").text(institution);
     const sortableElement = $("<ul></ul>");
@@ -77,7 +77,6 @@ function initDragDrop() {
       // AJAX REQUEST HERE
       console.log($(this).children());
       console.log(dragDropSets[index]);
-
     });
 
     const notifierElement = $("<small></small>");
@@ -91,22 +90,33 @@ function initDragDrop() {
   $(".trash").droppable({
     accept: ".sortable, .draggable",
     activate: function(event, ui) {
-      $(this).css("background-color", "#efefef");
-      $(this).addClass(["border", "border-radius", "border-secondary"]);
-      $(this).text("Drop here to remove");
+      $(this).css("visibility", "visible");
       
     },
     deactivate: function(event, ui) {
-      $(this).css("background-color", "transparent");
-      $(this).removeClass(["border", "border-radius", "border-secondary"]);
-      $(this).text("");
+      $(this).css("visibility", "hidden");
+      
     },
     drop: function(event, ui) {
       ui.helper.remove();
-      $(this).css("background-color", "transparent");
-      $(this).removeClass(["border", "border-radius", "border-secondary"]);
-    },
+      $(this).css("visibility", "hidden");
+      refreshChildrenSetOfInstitutions(institutions, dragDropSets);
+    }
 
   });
   
+}
+
+
+function refreshChildrenSetOfInstitutions(institutions, institutionSets) {
+
+  institutions.map((val, i) => {
+    var children = $(`#institutions-${i}`).children();
+    const set = new Set();
+    children.each((idx, val) => {
+      set.add($(this).attr("data"));
+    });
+    institutionSets[i] = set;
+    console.log(set);
+  });
 }
