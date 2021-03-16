@@ -21,28 +21,31 @@ This is the body.
 <button onclick="gen2()">Click me</button>
 <div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
 <script>
-  function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
-    return null;
-  }
-  
-   var diagram = new go.Diagram("myDiagramDiv");
+      if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
       var $ = go.GraphObject.make;
-      diagram.nodeTemplate =
-        $(go.Node, "Auto",  // the Shape automatically fits around the TextBlock
-          $(go.Shape, "RoundedRectangle",  // use this kind of figure for the Shape
-            // bind Shape.fill to Node.data.color
-            new go.Binding("fill", "color")),
-          $(go.TextBlock,
-            { margin: 3 },  // some room around the text
-            // bind TextBlock.text to Node.data.key
-            new go.Binding("text", "key"))
-        );
 
-      diagram.linkTemplate =
-        $(go.Link,       // the whole link panel
-          $(go.Shape)  // the link shape, default black stroke
-        );
-        myDiagram.nodeTemplate =
+      myDiagram =
+        $(go.Diagram, "myDiagramDiv",  // create a Diagram for the DIV HTML element
+          {
+            "LinkDrawn": maybeChangeLinkCategory,     // these two DiagramEvents call a
+            "LinkRelinked": maybeChangeLinkCategory,  // function that is defined below
+            "undoManager.isEnabled": true
+          });
+
+      // when the document is modified, add a "*" to the title and enable the "Save" button
+      myDiagram.addDiagramListener("Modified", function(e) {
+        var button = document.getElementById("SaveButton");
+        if (button) button.disabled = !myDiagram.isModified;
+        var idx = document.title.indexOf("*");
+        if (myDiagram.isModified) {
+          if (idx < 0) document.title += "*";
+        } else {
+          if (idx >= 0) document.title = document.title.substr(0, idx);
+        }
+      });
+
+      // the regular node template, which supports user-drawn links from the main Shape
+      myDiagram.nodeTemplate =
         $("Node", "Auto",
           {
             locationSpot: go.Spot.Center,
@@ -59,6 +62,54 @@ This is the body.
             { margin: 8 },  // make some extra space for the shape around the text
             new go.Binding("text", "key"))  // the label shows the node data's key
         );
+
+      // This is the template for a label node on a link: just an Ellipse.
+      // This node supports user-drawn links to and from the label node.
+      myDiagram.nodeTemplateMap.add("LinkLabel",
+        $("Node",
+          {
+            selectable: false, avoidable: false,
+            layerName: "Foreground"
+          },  // always have link label nodes in front of Links
+          $("Shape", "Ellipse",
+            {
+              width: 5, height: 5, stroke: null,
+              portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer"
+            })
+        ));
+
+      // the regular link template, a straight blue arrow
+      myDiagram.linkTemplate =
+        $("Link",
+          { relinkableFrom: true, relinkableTo: true, toShortLength: 2 },
+          $("Shape", { stroke: "#2E68CC", strokeWidth: 2 }),
+          $("Shape", { fill: "#2E68CC", stroke: null, toArrow: "Standard" })
+        );
+
+      // This template shows links connecting with label nodes as green and arrow-less.
+      myDiagram.linkTemplateMap.add("linkToLink",
+        $("Link",
+          { relinkableFrom: true, relinkableTo: true },
+          $("Shape", { stroke: "#2D9945", strokeWidth: 2 })
+        ));
+
+
+      // GraphLinksModel support for link label nodes requires specifying two properties.
+      myDiagram.model =
+        $(go.GraphLinksModel,
+          { linkLabelKeysProperty: "labelKeys" });
+
+      // Whenever a new Link is drawng by the LinkingTool, it also adds a node data object
+      // that acts as the label node for the link, to allow links to be drawn to/from the link.
+      myDiagram.toolManager.linkingTool.archetypeLabelNodeData =
+        { category: "LinkLabel" };
+
+      // this DiagramEvent handler is called during the linking or relinking transactions
+      function maybeChangeLinkCategory(e) {
+        var link = e.subject;
+        var linktolink = (link.fromNode.isLinkLabel || link.toNode.isLinkLabel);
+        e.diagram.model.setCategoryForLinkData(link.data, (linktolink ? "linkToLink" : ""));
+      }
 
     var data = { "class": "go.GraphLinksModel",
   "linkLabelKeysProperty": "labelKeys",
@@ -80,9 +131,7 @@ This is the body.
 {"from":"Alpha", "to":"G-D", "labelKeys":[ "A-G-D" ], "category":"linkToLink"},
 {"from":"A-B", "to":"G-D", "labelKeys":[ "A-B-G-D" ], "category":"linkToLink"}
  ]}
-      
-    console.log(data);
-    diagram.model = go.Model.fromJson(data);
+          myDiagram.model = data;
 
   function gen() {
     return diagram.model.toJson();
@@ -110,7 +159,7 @@ This is the body.
  ]}
       
     console.log(data);
-    diagram.model = go.Model.fromJson(data);
+    myDiagram.model = go.Model.fromJson(data);
     return diagram.model;
   } 
 </script>

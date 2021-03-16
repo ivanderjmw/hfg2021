@@ -12,7 +12,6 @@ class addIndividualForm(forms.ModelForm):
 
 class addTagForm(forms.ModelForm):
     tag_name = forms.CharField(required=False, max_length=200)
-
     class Meta:
         model = Tags
         fields = ('tag_name',)
@@ -27,7 +26,10 @@ class addCommunityForm(forms.ModelForm):
 
 class addAssetForm(forms.ModelForm):
     asset_name = forms.CharField(required=False, max_length=500)
+    asset_details = forms.CharField(required=False, max_length=500)
+    asset_address = forms.CharField(required=False, max_length=500)
+    asset_contact = forms.CharField(required=False, max_length=500)
 
     class Meta:
         model = Assets
-        fields = ('asset_name',)
+        fields = ('asset_name','asset_details','asset_address','asset_contact',)

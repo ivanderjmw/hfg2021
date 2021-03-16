@@ -34,6 +34,8 @@ class MyUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
         )
+        user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -80,6 +82,10 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 # All entities and associations are private to each user
 # --------------------- Entities ------------------------
 class Node(models.Model):
+    name = models.TextField(
+        blank=False,
+        unique=True
+    )
     #Many-to-one user
     owner = models.ForeignKey(
         Profile,
@@ -95,69 +101,85 @@ class Node(models.Model):
     )
 
 class Stakeholders(Node):
-    name = models.TextField(
-        blank = False
-    )
     def get_dict(self):
-        return {"key": self.name, "color": "lightblue"},
+        d = dict()
+        d["key"] = self.name
+        d["color"] = "lightblue"
+        print("here")
+        print(d)
+        return d
 
 class Tags(Node):
-    name = models.TextField(
-        blank=False
-    )
     details = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
-    magnitude = models.SmallIntegerField()
+    magnitude = models.SmallIntegerField(
+        null=True
+    )
     def get_dict(self):
-        return {"key": self.name, "color": "yellow"},
+        d = dict()
+        d["key"] = self.name
+        d["color"] = "yellow"
+        return d
 
 #refering to physical asset not qualities like Kindness
 class Assets(Node):
-    name = models.TextField(
-        blank=False
-    )
     details = models.TextField(
-        blank=True
+        blank=True,
+        null=True
+
     )
     address = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
     contact = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
-    rating = models.FloatField()
 
     def get_dict(self):
-        return {"key": self.name, "color": "red"},
+        if self.x_coord == None:
+            d = dict()
+            d["key"] = self.name
+            d["color"] = "red"
+            return d
+        else:
+            coord = str(self.x_coord) + " " + str(self.y_coord)
+            d = dict()
+            d["key"] = self.name
+            d["color"] = "red"
+            d["coord"] = coord
+            return d
     
 
 class Institutions(Node):
-    name = models.TextField(
-        blank=False
-    )
     details = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
     address = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
     contact = models.TextField(
-        blank=True
-    )
-    site = models.TextField(
-        blank=True
+        blank=True,
+        null=True
     )
     email = models.EmailField(
         verbose_name='email address',
         max_length=127,
         blank=False,
         unique=False,
+        null=True
     )
-    rating = models.SmallIntegerField()
 
     def get_dict(self):
-        return {"key": self.name, "color": "blue"},
+            d = dict()
+            d["key"] = self.name
+            d["color"] = "blue"
+            return d
 
 
 class Community(Node):
@@ -166,7 +188,10 @@ class Community(Node):
     )
 
     def get_dict(self):
-        return {"key": self.name, "color": "yellow"},
+        d = dict()
+        d["key"] = self.name
+        d["color"] = "yellow"
+        return d
 
 # --------------------- Relationships -------------------
 # class Relationships(models.Model):
