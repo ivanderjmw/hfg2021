@@ -73,6 +73,9 @@ def step3(request: HttpRequest):
 def step4(request: HttpRequest):
     return render(request=request, template_name="abcd/step4.html")
 
+@login_required(login_url='/login')
+def step5(request: HttpRequest):
+    return render(request=request, template_name="abcd/step5.html")
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):
