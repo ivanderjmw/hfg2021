@@ -18,8 +18,12 @@
 <link rel="stylesheet" href="https://unpkg.com/bpmn-js@8.2.1/dist/assets/bpmn-font/css/bpmn.css" />
 <script src="https://unpkg.com/bpmn-js@8.2.1/dist/bpmn-modeler.development.js"></script>
 This is the body.
+<button onclick="gen2()">Click me</button>
 <div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
 <script>
+  function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
+    return null;
+  }
    var diagram = new go.Diagram("myDiagramDiv");
       var $ = go.GraphObject.make;
       diagram.nodeTemplate =
@@ -33,23 +37,39 @@ This is the body.
             new go.Binding("text", "key"))
         );
 
-      // the Model holds only the essential information describing the diagram
-      diagram.model = new go.GraphLinksModel(
-      [ // a JavaScript Array of JavaScript objects, one per node;
-        // the "color" property is added specifically for this app
-        { key: "Alpha", color: "lightblue" },
-        { key: "Beta", color: "orange" },
-        { key: "Gamma", color: "lightgreen" },
-        { key: "Delta", color: "pink" }
-      ],
-      [ // a JavaScript Array of JavaScript objects, one per link
-        { from: "Alpha", to: "Beta" },
-        { from: "Alpha", to: "Gamma" },
-        { from: "Beta", to: "Beta" },
-        { from: "Gamma", to: "Delta" },
-        { from: "Delta", to: "Alpha" }
-      ]);
+    diagram.linkTemplate =
+      $(go.Link,       // the whole link panel
+        $(go.Shape)  // the link shape, default black stroke
+      );
 
+
+  function gen() {
+    return diagram.model.toJson();
+  }
+  function gen2() {
+    var data = {"class": "GraphLinksModel",
+    "linkLabelKeysProperty": "labelKeys",
+    "nodeDataArray": [
+        {"key": "Alpha", "color": "lightblue", "loc": "29 14"},
+        {"key": "Beta", "color": "orange", "loc": "145 -5"},
+        {"key": "Gamma", "color": "lightgreen", "loc": "29 106"},
+        {"key": "Delta", "color": "pink", "loc": "129 106"}
+    ],
+    "linkDataArray": [
+        {"from": "Alpha", "to": "Beta",
+            "labelKeys": ["A-B"]},
+        {"from": "Gamma", "to": "Delta",
+            "labelKeys": ["G-D"]},
+        {"from": "Alpha", "to": "Gamma",
+            "labelKeys": ["A-G"]},
+        {"from": "Beta", "to": "Gamma",
+            "labelKeys": [-8], "category":""},
+        {"from": "Beta", "to": "Delta", "labelKeys": [-5]},
+        {"from": "Alpha", "to": "Delta", "labelKeys": [-6]}
+    ]}
+    diagram.model = go.Model.fromJson(data);
+    return diagram.model;
+  } 
 </script>
 
 </body>

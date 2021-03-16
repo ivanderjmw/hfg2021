@@ -1,4 +1,16 @@
 {% extends "abcd/stepbase.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 {% endblock %}
+=======
+<h1>Tell us about your community. Where is it?</h1>
+<form method="post" id="addCommunityForm">
+<div class="form-group">
+{% csrf_token %}
+  <input id="community_addr" type="text" class="form-control" name="community_addr" placeholder="Enter location">
+  <input class="btn btn-primary" type="submit" value=Add>
+</div>
+</form>
+{% endblock %}
+>>>>>>> 3bf0f0bc0d7bb400429a8cc718bfd3e4f0c80001

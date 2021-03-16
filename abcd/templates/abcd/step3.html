@@ -2,5 +2,13 @@
 
 {% block content %}
 <h1>What are the assets?</h1>
-
+<form method="post" id="addCommunityForm">
+<div class="form-group">
+{% csrf_token %}
+  <input id="asset_name" type="text" class="form-control" name="asset_name" placeholder="Enter asset name">
+  <input type="text" class="form-control" name="asset_details" placeholder="Enter asset details">
+  <input type="text" class="form-control" name="asset_address" placeholder="Enter asset address">
+  <input type="text" class="form-control" name="asset_contact" placeholder="Enter asset contact">
+  <input class="btn btn-primary" type="submit" value=Add>
+</div>
 {% endblock %}
