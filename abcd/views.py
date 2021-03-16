@@ -1,5 +1,5 @@
 import json
-
+from django.contrib.auth.decorators import login_required
 from abcd.models import *
 from abcd.forms import *
 from django.http.request import HttpRequest
@@ -8,6 +8,7 @@ from django.shortcuts import render
 
 
 # Homepage before login
+@login_required(login_url='/login')
 def step1(request: HttpRequest):
     form = addCommunityForm(request.POST or None)
     if request.method == "POST":
@@ -20,6 +21,8 @@ def step1(request: HttpRequest):
     return render(request=request, template_name="abcd/step1.html",
                 context={"form": form})
 
+
+@login_required(login_url='/login')
 def step2(request: HttpRequest):
     form = addIndividualForm(request.POST or None)
     initial_data = {"class": "GraphLinksModel",
@@ -82,6 +85,8 @@ def step2(request: HttpRequest):
     return render(request=request, template_name="abcd/step2.html",
                   context={"form": form, "tags": {}, "individuals": {}, "data": initial_data})
 
+
+@login_required(login_url='/login')
 def step3(request: HttpRequest):
     form = addAssetForm(request.POST or None)
     if request.method == "POST":
@@ -94,9 +99,13 @@ def step3(request: HttpRequest):
             temp.save()
     return render(request=request, template_name="abcd/step3.html")
 
+
+@login_required(login_url='/login')
 def step4(request: HttpRequest):
     return render(request=request, template_name="abcd/step4.html")
 
+
+@login_required(login_url='/login')
 def results(request: HttpRequest):
     return render(request=request, template_name="abcd/finalGraph.html")
 

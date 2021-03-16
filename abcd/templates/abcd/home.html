@@ -4,5 +4,6 @@
 <h1>Home page</h1>
 <h2>What is ABCD framework?</h2>
 <p>ABCD is something awesome.</p>
-<a class="custom-google btn btn-outline-dark m-4 google-btn" href="#">    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>Login with Google</a>
+{% load socialaccount %}
+<a class="custom-google btn btn-outline-dark m-4 google-btn" href="{% provider_login_url 'google' next="/home/"%}">    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>Login with Google</a>
 {% endblock %}
