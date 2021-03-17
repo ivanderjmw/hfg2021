@@ -30,8 +30,8 @@ def step2(request: HttpRequest):
     form2 = addTagForm(request.POST or None)
     tags= []
     stakeholders = []
-    stakeholders.extend(Stakeholders.objects.all())
-    tags.extend(Tags.objects.all())
+    stakeholders.extend(Stakeholders.objects.filter(owner=request.user))
+    tags.extend(Tags.objects.filter(owner=request.user))
     print(len(stakeholders))
     print(len(tags))
     if request.method == "POST":
@@ -69,7 +69,7 @@ def step3(request: HttpRequest):
                 owner=request.user)
             temp.save()
 
-    assets = Assets.objects.all()
+    assets = Assets.objects.filter(owner=request.user)
 
     return render(request=request, template_name="abcd/step3.html", context={"assets": assets})
 
@@ -90,7 +90,7 @@ def step4(request: HttpRequest):
                 owner=request.user)
             temp.save()
 
-    institutions = Institutions.objects.all()
+    institutions = Institutions.objects.filter(owner=request.user)
     return render(request=request, template_name="abcd/step4.html", context={"institutions": institutions})
 
 @login_required(login_url='/login')
@@ -117,8 +117,7 @@ def step5(request: HttpRequest):
         profile.save()
 
 
-
-    institutions = Institutions.objects.all()
+    institutions = Institutions.objects.filter(owner=request.user)
     listInsts = []
     for inst in institutions.iterator():
         listInsts.append(json.dumps({
@@ -128,7 +127,7 @@ def step5(request: HttpRequest):
             "contact": inst.contact
         }))
 
-    stakeholders = Stakeholders.objects.all()
+    stakeholders = Stakeholders.objects.filter(owner=request.user)
     listStakes = []
     for stake in stakeholders.iterator():
         listStakes .append(json.dumps({
@@ -157,13 +156,13 @@ def save_graph(request: HttpRequest):
         color = node['color']
         x_y = node['loc'].split()
         if color == "yellow": # tags
-            target = Tags.objects.get(name=node['key'])
+            target = Tags.objects.filter(owner=request.user).get(name=node['key'])
         elif color == "lightblue":  # stakeholder
-            target = Stakeholders.objects.get(name=node['key'])
+            target = Stakeholders.objects.filter(owner=request.user).get(name=node['key'])
         elif color == "red": # assets
-            target = Assets.objects.get(name=node['key'])
+            target = Assets.objects.filter(owner=request.user).get(name=node['key'])
         elif color == "blue": # institution
-            target = Institutions.objects.get(name=node['key'])
+            target = Institutions.objects.filter(owner=request.user).get(name=node['key'])
         target.x_coord = x_y[0]
         target.y_coord = x_y[1]
         target.save()
@@ -197,7 +196,6 @@ def generateJson(user):
     d["nodeDataArray"] = nodes_dic
     d["linkDataArray"] = assocs
     json_object = json.dumps(d, indent=4)
-    print(json_object)
     return json_object
 
 def createConnString(fromItem, toItem):
