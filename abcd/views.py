@@ -106,7 +106,7 @@ def step5(request: HttpRequest):
         assocsString = profile.assocs
         if assocsString == "":
             assocsString = "[]"
-
+            
         for x in dataDict.keys():
             for y in dataDict[x]:
                 assocsString = appendToStringList(
@@ -141,6 +141,7 @@ def step5(request: HttpRequest):
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):
+    print(request.user)
     json = generateJson(request.user)
     return render(request=request, template_name="abcd/finalGraph.html", context={"data": json})
 
@@ -201,9 +202,9 @@ def generateJson(user):
 
 def createConnString(fromItem, toItem):
     connString = "{"
-    connString += "from:" + "\"" + fromItem + "\""
+    connString += "\"from\":" + "\"" + fromItem + "\""
     connString += ","
-    connString += "to:" + "\"" + toItem + "\""
+    connString += "\"to\":" + "\"" + toItem + "\""
     connString += "}"
     return connString
 
