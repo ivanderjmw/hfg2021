@@ -115,8 +115,6 @@ small {
   const institutions = data["institutions"].map(x=>JSON.parse(x));;//["University", "Factory", "Police Headquarters"];
   const dragDropSets = initDragDropSets(institutions);
 
-  const csrftoken = getCookie('csrftoken');
-
   $(document).ready(function () {
     initDragDrop();
     addSaveButtonHandler();
@@ -131,8 +129,11 @@ small {
   
     let removeIntent = false;
   
-    $("ul, li").disableSelection();
-  
+    try {
+      $("ul, li").disableSelection();
+    } catch (err) {
+      console.log(err);
+    }
     stakeholders.map((stakeholder, index) => {
       var draggableElement = $("<li></li>").text(stakeholder["name"]);
       draggableElement.addClass("draggable");
@@ -261,10 +262,6 @@ small {
     });
   }
 
-
-</script>
-
-<script>
   $('<img/>').attr('src', "../../static/abcd/img/step4.png").on('load', function() {
    $(this).remove(); // prevent memory leaks as @benweet suggested
    $('body').css('background-image', 'url("../../static/abcd/img/step4.png")');
