@@ -97,11 +97,25 @@ def step5(request: HttpRequest):
         print(request.body)
 
     institutions = Institutions.objects.all()
-    stakeholders = Stakeholders.objects.all()
+    listInsts = []
+    for inst in institutions.iterator():
+        listInsts.append(json.dumps({
+            "name": inst.name,
+            "details": inst.details,
+            "address": inst.address,
+            "contact": inst.contact
+        }))
 
-    dataDict = {"institutions": institutions, "stakeholders": stakeholders}
+    stakeholders = Stakeholders.objects.all()
+    listStakes = []
+    for stake in stakeholders.iterator():
+        listStakes .append(json.dumps({
+            "name": stake.name
+        }))
+
+    dataDict = {"institutions": listInsts, "stakeholders": listStakes}
     data = json.dumps(dataDict)
-    return render(request=request, template_name="abcd/step5.html", context=data)
+    return render(request=request, template_name="abcd/step5.html", context={"data": data})
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):

@@ -13,6 +13,9 @@ body {
   background-size: 50vh auto;  
 }
 
+.draggable {
+  cursor: pointer;
+}
 
 .list-group {
   width: 200px;
@@ -64,7 +67,8 @@ small {
 
 {% block content %}
 
-<div class="main">
+<div class="main col">
+<div class="row">
 <div class="container">
     <h1>What are the institutions and associations involved?</h1>
     <div class="row mt-5">
@@ -88,7 +92,13 @@ small {
         </div>
         
     </div>
-    <button class="btn btn-primary" id="save-btn" style="visibility: hidden">Save</button>
+  </div>
+  
+</div>
+<div class="row mt-3">
+  <div class="container">
+  <button class="btn btn-primary" id="save-btn" style="visibility: hidden">Save connections</button>
+</div>
 </div>
 </div>
 
@@ -99,8 +109,9 @@ small {
 <script>
 
   const icolumns = 4;
-  const stakeholders = ["Students", "Workers", "Police", "A", "B", "C", "D", "E", "F"];
-  const institutions = ["University", "Factory", "Police Headquarters"];
+  const data = JSON.parse("{{data|escapejs}}")
+  const stakeholders = data["stakeholders"].map(x=>JSON.parse(x));
+  const institutions = data["institutions"].map(x=>JSON.parse(x));;//["University", "Factory", "Police Headquarters"];
   const dragDropSets = initDragDropSets(institutions);
   function getCookie(name) {
     let cookieValue = null;
@@ -136,7 +147,7 @@ small {
     $("ul, li").disableSelection();
   
     stakeholders.map((stakeholder, index) => {
-      var draggableElement = $("<li></li>").text(stakeholder);
+      var draggableElement = $("<li></li>").text(stakeholder["name"]);
       draggableElement.addClass("draggable");
       draggableElement.addClass("list-group-item");
       draggableElement.attr("id", `stakeholders-${index}`);
@@ -171,7 +182,7 @@ small {
       colElement.addClass("institution-body");
       colElement.addClass(["border", "border-white", "rounded", "m-2", "p-2"]);
   
-      const nameElement = $("<h3></h3>").text(institution);
+      const nameElement = $("<h3></h3>").text(institution["name"]);
       const sortableElement = $("<ul></ul>");
       sortableElement.attr("id", `institutions-${index}`);
       sortableElement.attr("data", index);
@@ -230,7 +241,7 @@ small {
       refreshChildrenSetOfInstitutions();
       var data = {};
       dragDropSets.forEach((val, idx) => {
-        data[institutions[idx].toString()] = Array.from(val).map(val=>stakeholders[val]);
+        data[institutions[idx]["name"].toString()] = Array.from(val).map(val=>stakeholders[val]);
       });
       console.log(data);
 
@@ -242,10 +253,6 @@ small {
         method: 'POST',
         body: JSON.stringify(data),
         mode: 'same-origin'
-      })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result)
       });
     });
     $('#save-btn').css("visibility", "visible");
