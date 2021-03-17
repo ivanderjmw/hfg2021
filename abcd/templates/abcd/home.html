@@ -4,10 +4,19 @@
 <style>
 body {
   background-color: #0142FF;
-  background-image: url('../Intro.png');
+  background-image: url('../../static/abcd/Intro.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;  
+  background-size: 100vw auto;
+}
+
+.google-btn {
+  position: absolute;
+  top: calc(50vh + 20vw);
+  left: 8vw;
+  width: 20vw;
+  height: auto;
 }
 
 </style>
@@ -15,9 +24,6 @@ body {
 {% endblock %}
 
 {% block content %}
-<h1>Home page</h1>
-<h2>What is ABCD framework?</h2>
-<p>ABCD is something awesome.</p>
 {% load socialaccount %}
 <a class="custom-google btn btn-outline-dark m-4 google-btn" href="{% provider_login_url 'google' %}?next=/community/">    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>Login with Google</a>
 {% endblock %}

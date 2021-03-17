@@ -6,25 +6,25 @@
 <style>
 body {
   background-color: #4BED93;
+  background-image: url('../../static/abcd/img/step4.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50vw 20vh;
+  background-size: 50vh auto;  
 }
 
-.img-screen5 {
-  position: relative;
-  top: 10vh;
-  left: 40vw;
-  width: 800px;
-  z-index: 0;
-}
 
 .list-group {
   width: 200px;
 }
 .list-group-item {
   width: 200px;
+  display: block;
 }
 .sortable {
   min-height: 50px;
-  width: inherit;
+  width: 100%;
+  min-width: 200px;
 }
 .placeholder {
   background-color:rgba(72, 72, 72, 0.201);
@@ -38,17 +38,15 @@ body {
 
 .trash {
   background-color: #ff575748;
+  min-height: 50px;
   visibility: hidden;
   border-width: 5px!important;
   width: 100%;
+  max-width: 200px;
 }
 
-.main {
-  z-index: 100;
-  position: absolute;
-}
-.border-width-5 {
-  border-width: 5px!important;
+.institution-body {
+  border-width: 8px!important;
 }
 
 .institution-body h3 {
@@ -60,7 +58,7 @@ small {
   overflow-wrap: break-word;
 }
 
-</style>>
+</style>
 {% endblock %}
 
 
@@ -83,21 +81,47 @@ small {
                 <ul class="list-group stakeholders-list-group">
                 </ul>
             </div>
-            <div class="trash container mt-5 m-0 p-1 text-center border rounded"><i>Drop here to remove</i></div>
+            <div class="container mt-2">
+              <div class="trash m-0 p-1 text-center border rounded"><i>Drop here to remove</i></div>
+
+          </div>
         </div>
         
     </div>
+    <button class="btn btn-primary" id="save-btn" style="visibility: hidden">Save</button>
 </div>
 </div>
-<img src="../../static/abcd/img/step4.png" class="img-screen5"/>
 
 {% endblock %}
 
 {% block js %}
 
 <script>
+
+  const icolumns = 4;
+  const stakeholders = ["Students", "Workers", "Police", "A", "B", "C", "D", "E", "F"];
+  const institutions = ["University", "Factory", "Police Headquarters"];
+  const dragDropSets = initDragDropSets(institutions);
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie('csrftoken');
+
   $(document).ready(function () {
     initDragDrop();
+    addSaveButtonHandler();
   });
   
   function initDragDropSets(institutions) {
@@ -105,17 +129,14 @@ small {
   }
   
   function initDragDrop() {
-    const icolumns = 4;
-    const stakeholders = ["Students", "Workers", "Police", "A", "B", "C", "D", "E", "F"];
-    const institutions = ["University", "Factory", "Police Headquarters"];
+    
   
-    const dragDropSets = initDragDropSets(institutions);
     let removeIntent = false;
   
     $("ul, li").disableSelection();
   
     stakeholders.map((stakeholder, index) => {
-      var draggableElement = $("<ul></ul>").text(stakeholder);
+      var draggableElement = $("<li></li>").text(stakeholder);
       draggableElement.addClass("draggable");
       draggableElement.addClass("list-group-item");
       draggableElement.attr("id", `stakeholders-${index}`);
@@ -148,7 +169,7 @@ small {
       }
       const colElement = $("<div class='col'></div>");
       colElement.addClass("institution-body");
-      colElement.addClass(["border", "border-width-5", "border-white", "rounded", "m-2", "p-2"]);
+      colElement.addClass(["border", "border-white", "rounded", "m-2", "p-2"]);
   
       const nameElement = $("<h3></h3>").text(institution);
       const sortableElement = $("<ul></ul>");
@@ -173,8 +194,7 @@ small {
           $(this).data().uiSortable.currentItem.remove()
         }
         // AJAX REQUEST HERE
-        console.log($(this).children());
-        console.log(dragDropSets[index]);
+        console.log(dragDropSets);
       });
   
       const notifierElement = $("<small></small>");
@@ -198,24 +218,52 @@ small {
       drop: function(event, ui) {
         ui.helper.remove();
         $(this).css("visibility", "hidden");
-        refreshChildrenSetOfInstitutions(institutions, dragDropSets);
+        refreshChildrenSetOfInstitutions();
       }
   
     });
     
   }
+
+  function addSaveButtonHandler() {
+    $('#save-btn').click(()=> {
+      refreshChildrenSetOfInstitutions();
+      var data = {};
+      dragDropSets.forEach((val, idx) => {
+        data[institutions[idx].toString()] = Array.from(val).map(val=>stakeholders[val]);
+      });
+      console.log(data);
+
+      const request = new Request(
+        "/associations/",
+        {headers: {'X-CSRFToken': csrftoken}}
+      );
+      fetch(request, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        mode: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+      });
+    });
+    $('#save-btn').css("visibility", "visible");
+  }
   
   
-  function refreshChildrenSetOfInstitutions(institutions, institutionSets) {
+  function refreshChildrenSetOfInstitutions() {
   
     institutions.map((val, i) => {
-      var children = $(`#institutions-${i}`).children();
+      console.log(i);
+      var children = $(`#institutions-${i}`).children("li");
       const set = new Set();
       children.each((idx, val) => {
-        set.add($(this).attr("data"));
+        if($(val).attr("data")) {
+          set.add($(val).attr("data"));
+        }
       });
-      institutionSets[i] = set;
-      console.log(set);
+      dragDropSets[i] = set;
     });
   }
 </script>

@@ -66,7 +66,9 @@ def step3(request: HttpRequest):
             temp = Assets(name=name, details=details, address=address, contact=contact, 
                 owner=request.user)
             temp.save()
-    return render(request=request, template_name="abcd/step3.html")
+
+    
+    return render(request=request, template_name="abcd/step3.html", context={"assets": Assets.objects.all()})
 
 
 @login_required(login_url='/login')
@@ -75,6 +77,8 @@ def step4(request: HttpRequest):
 
 @login_required(login_url='/login')
 def step5(request: HttpRequest):
+    if request.method == "POST":
+        print(request.body)
     return render(request=request, template_name="abcd/step5.html")
 
 @login_required(login_url='/login')
