@@ -94,7 +94,27 @@ def step4(request: HttpRequest):
 @login_required(login_url='/login')
 def step5(request: HttpRequest):
     if request.method == "POST":
+        # [{"from": "Alpha", "to": "Beta"}, {"from": "Gamma", "to": "Delta"}]
+        # from institutions to stakeholders
         print(request.body)
+        print(json.loads(request.body).keys())
+        dataDict = json.loads(request.body)
+
+        profile = Profile.objects.get(id=request.user.id)
+        assocsString = profile.assocs
+        if assocsString == "":
+            assocsString = "[]"
+
+        for x in dataDict.keys():
+            for y in dataDict[x]:
+                assocsString = appendToStringList(
+                    assocsString, 
+                    createConnString(x, y["name"])
+                    )
+        profile.assocs = assocsString
+        profile.save()
+
+
 
     institutions = Institutions.objects.all()
     listInsts = []
@@ -145,3 +165,18 @@ def generateJson():
     print(d)
     return d
 
+def createConnString(fromItem, toItem):
+    connString = "{"
+    connString += "from:" + "\"" + fromItem + "\""
+    connString += ","
+    connString += "to:" + "\"" + toItem + "\""
+    connString += "}"
+    return connString
+
+def appendToStringList(stringList, item):
+    if stringList == "[]":
+        return "[" + item + "]"
+
+    if stringList.find(item) >= 0:
+        return stringList
+    return stringList[:-1] + "," + item + "]"
