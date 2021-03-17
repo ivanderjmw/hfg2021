@@ -6,25 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script></script>
-    <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'abcd/css/style.css' %}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet"> 
 <style>
-body {
+html, body {
     background-color: #4EE4C3;
-}
-
-h1 {
     font-family: 'rubik';
-    text-align: center;
+    height: 100%;
+    overflow-x: hidden;
+    background-image: url(../static/abcd/sc3.svg);
 }
 
+.container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first-column {
+    padding: 30px;
+
+}
+
+.badge {
+    display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px 50px;
+  min-width: 10px;
+  line-height: 1;
+  border: 1px solid transparent;
+  margin:20px 0px 30px 0px;
+}
+
+.badge-outline {
+    color: aliceblue;
+    border: 3px solid aliceblue;
+    background-color: transparent;
+}
+
+h3 {
+    margin:20px 0px 30px 0px;
+
+}
+
+h3:hover {
+    color: tomato;
+}
+input {
+  background: transparent;
+border: 0;
+  border-bottom: 2px solid black;
+  font-size: 20px;
+  height: 50px;
+  outline: none !important;
+  width: 300px;
+  padding-bottom: 4px;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+    }
+
+.second-column {
+    background-color: transparent;
+    padding: 30px;
+    border: 3px solid aliceblue;
+    border-radius: 30px;
+}
+
+h4{
+    padding: 30px;
+}
+
+p {
+    color: aliceblue;
+}
 </style>
 </head>
 <body>
-    <h1>The lovely people involved are..</h1>
-    <input class="text-input" type="text" placeholder=" ">        </div>
+    <div class="container">
+        
+        <div class="row">
+          <div class="col-sm-6 first-column">
+              <h2>Stakeholder</h2>
+              <span class="badge badge-pill badge-light badge-outline">Student</span>
+              <h3>Strengths</h3>
+              <h3>Interests</h3>
+              <h3>Qualities</h3>
+              <input type="text">
+          </div>
+          <div class="col-sm-6 second-column">
+            <h4>Strengths</h4>
+            <p>
+              Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
+              </p>
+            <h4>Interests</h4>
+            <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
 
+            <h4>Qualities</h4>
+            <p>Lorem ipsum </p>
+ 
+          </div> 
+        </div>
+        <div class="row">
+          
+        </div>
+      </div>
+      
 </body>
 </html>
