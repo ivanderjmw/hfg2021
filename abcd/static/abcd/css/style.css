@@ -12,6 +12,14 @@ body {
   left: 6em;
 }
 
+.canvas {
+  border-color: black;
+  position: relative;
+  height: 70vh;
+  width: 50vw;
+  background-color: white;
+}
+
 #step1{
   background-color:#FFD214;
 }
