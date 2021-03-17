@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="col">
-<div class="row">
+<div class="row d-block">
   <div class="container">
-  <h1>What are the Physical Assets?</h1>
+   <h1>What are the Physical Assets?</h1>
+  </div>
 </div>
-</div>
-<div class="row">
+<div class="row d-block">
   <div class="container">
     <form method="post" id="addCommunityForm">
       {% csrf_token %}
@@ -31,7 +31,7 @@
     </form>
   </div>
 </div>
-<div class="row mt-3">
+<div class="row d-block mt-3">
   <div class="container">
     <h2>Physical Assets</h2>
     <ul class="list-group">
@@ -44,6 +44,7 @@
       </li>
     {% endfor %}
     </ul>
+  </div>
 </div>
 <datalist id="assets">
   <option value="Heyho">

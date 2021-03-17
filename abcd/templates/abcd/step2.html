@@ -1,20 +1,50 @@
 {% extends "abcd/stepbase.html" %}
 
 {% block content %}
-<h1>Who are the individuals?</h1>
-<form method="post" id="addIndividualForm" onsubmit = "return true;">
-<div class="form-group">
-{% csrf_token %}
-  <input type="text" class="form-control" name="individual_name" placeholder="Enter stakeholder's name">
-  <input class="btn btn-primary" type="submit" value=Add>
-</div>
-</form>
-  <form action="" method="POST" >
+<div class="col">
+  <div class="row">
+    <h1>Who are the individuals?</h1>
+  </div>
+  <div class="row">
+  <div class="container">
+    
+    <form method="post" id="addIndividualForm" onsubmit = "return true;">
+    <div class="form-group">
+    {% csrf_token %}
+      <label>Stakeholder's name</label>
+      <input type="text" class="form-control" name="individual_name" placeholder="Enter stakeholder's name">
+    </div>
+    <div class="form-group">
+      <label class="d-block">Strengths</label>
+      <div class="d-flex">
+      <input type="text" class="form-control" name="individual_strengths" placeholder="Enter strengths">
+      <button class="btn btn-secondary" value=add>Add</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="d-block">Interests</label>
+      <div class="d-flex">
+        <input type="text" class="form-control" name="individual_interests" placeholder="Enter interests">
+        <button class="btn btn-secondary" value=add>Add</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="d-block">Qualities</label>
+      <div class="d-flex">
+        <input type="text" class="form-control" name="individual_qualities" placeholder="Enter qualities">
+       <button class="btn btn-secondary" value=add>Add</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit" value=add>Add Stakeholder</button>
+    </form>
+    <!-- <form action="" method="POST" >
     {% csrf_token %}
     {{ form2.as_p }}
-  <button type="submit" name="htmlsubmitbutton2">Add</button>
-  </form>
-
-
+    <button name="htmlsubmitbutton2" class="btn">Add</button>
+    </form> -->
+  
+  </div>
+</div>
+</div>
 
 {% endblock %}

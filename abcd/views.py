@@ -74,13 +74,34 @@ def step3(request: HttpRequest):
 
 @login_required(login_url='/login')
 def step4(request: HttpRequest):
-    return render(request=request, template_name="abcd/step4.html")
+    form = addInstitutionForm(request.POST or None)
+    if request.method == "POST":
+        print(request.user)
+        if not form.is_valid():
+            print("invalid")
+        else:
+            name = form.cleaned_data['institution_name']
+            details = form.cleaned_data['institution_details']
+            address = form.cleaned_data['institution_address']
+            contact = form.cleaned_data['institution_contact']
+            temp = Institutions(name=name, details=details, address=address, contact=contact, 
+                owner=request.user)
+            temp.save()
+
+    institutions = Institutions.objects.all()
+    return render(request=request, template_name="abcd/step4.html", context={"institutions": institutions})
 
 @login_required(login_url='/login')
 def step5(request: HttpRequest):
     if request.method == "POST":
         print(request.body)
-    return render(request=request, template_name="abcd/step5.html")
+
+    institutions = Institutions.objects.all()
+    stakeholders = Stakeholders.objects.all()
+
+    dataDict = {"institutions": institutions, "stakeholders": stakeholders}
+    data = json.dumps(dataDict)
+    return render(request=request, template_name="abcd/step5.html", context=data)
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):

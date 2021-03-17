@@ -2,43 +2,51 @@
 
 {% block content %}
 <div class="col">
-  <div class="row">
+  <div class="row d-block">
     <div class="container">
     <h1>What are the Institutions?</h1>
     </div>
   </div>
-  <div class="row">
+  <div class="row d-block">
     <div class="container">
       <form method="post" id="addCommunityForm">
         {% csrf_token %}
-      <div class="form-group">
-        <label>Asset name</label>
-        <input id="asset_name" type="text" class="form-control" name="asset_name" placeholder="Enter asset name" list="assets">
-      </div>
-      <div class="form-group">
-        <label>Asset details</label>
-        <input type="text" class="form-control" name="asset_details" placeholder="Enter asset details">
-      </div>
-      <div class="form-group">
-        <label>Asset address</label>
-        <input type="text" class="form-control" name="asset_address" placeholder="Enter asset address">
-      </div>
-      <div class="form-group">
-        <label>Asset contact</label>
-        <input type="text" class="form-control" name="asset_contact" placeholder="Enter asset contact">
-      </div>
+        <div class="form-group">
+          <label>Institution name</label>
+          <input id="institution_name" type="text" class="form-control" name="institution_name" placeholder="Enter institution name" list="institutions">
+        </div>
+        <div class="form-group">
+          <label>Institution details</label>
+          <input type="text" class="form-control" name="institution_details" placeholder="Enter institution details">
+        </div>
+        <div class="form-group">
+          <label>Institution address</label>
+          <input type="text" class="form-control" name="institution_address" placeholder="Enter institution address">
+        </div>
+        <div class="form-group">
+          <label>Institution contact</label>
+          <input type="text" class="form-control" name="institution_contact" placeholder="Enter institution contact">
+        </div>
         <input class="btn btn-primary" type="submit" value=Add>
       </form>
     </div>
   </div>
-  <div class="row">
+  <div class="row d-block mt-3">
     <div class="container">
-    {% for asset in assets %}
-      <p>{{asset.name}}</p>
-    {% endfor %}
+    <h2>Institutions</h2>
+      <ul class="list-group">
+      {% for institution in institutions %}
+      <li class="list-group-item">
+        <p class="font-weight-bold">{{institution.name}}</p>
+        <p>{{institution.details}}</p>
+        <p>{{institution.address}}</p>
+        <p>{{institution.contact}}</p>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
-<datalist id="assets">
+<datalist id="institutions">
   <option value="Heyho">
   <option value="Heyha">
 </datalist>
