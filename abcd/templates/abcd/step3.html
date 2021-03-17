@@ -4,7 +4,7 @@
 <div class="col">
 <div class="row">
   <div class="container">
-  <h1>What are the Institutions?</h1>
+  <h1>What are the Physical Assets?</h1>
 </div>
 </div>
 <div class="row">
@@ -31,6 +31,19 @@
     </form>
   </div>
 </div>
+<div class="row mt-3">
+  <div class="container">
+    <h2>Physical Assets</h2>
+    <ul class="list-group">
+    {% for asset in assets %}
+      <li class="list-group-item">
+        <p class="font-weight-bold">{{asset.name}}</p>
+        <p>{{asset.details}}</p>
+        <p>{{asset.address}}</p>
+        <p>{{asset.contact}}</p>
+      </li>
+    {% endfor %}
+    </ul>
 </div>
 <datalist id="assets">
   <option value="Heyho">

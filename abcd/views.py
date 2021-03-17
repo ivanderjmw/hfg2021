@@ -67,8 +67,9 @@ def step3(request: HttpRequest):
                 owner=request.user)
             temp.save()
 
-    
-    return render(request=request, template_name="abcd/step3.html", context={"assets": Assets.objects.all()})
+    assets = Assets.objects.all()
+
+    return render(request=request, template_name="abcd/step3.html", context={"assets": assets})
 
 
 @login_required(login_url='/login')
