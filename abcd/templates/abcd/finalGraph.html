@@ -72,8 +72,8 @@
 
       // Whenever a new Link is drawng by the LinkingTool, it also adds a node data object
       // that acts as the label node for the link, to allow links to be drawn to/from the link.
-      myDiagram.toolManager.linkingTool.archetypeLabelNodeData =
-        { category: "LinkLabel" };
+      //myDiagram.toolManager.linkingTool.archetypeLabelNodeData =
+      //  { category: "LinkLabel" }; REMOVED 
 
       // this DiagramEvent handler is called during the linking or relinking transactions
       function maybeChangeLinkCategory(e) {
@@ -92,6 +92,7 @@
 
       function saveGraph() {
         json = myDiagram.model.toJson();
+        console.log(json);
         $.ajax({
             url: "/results/sendJson/",
             type: 'POST',

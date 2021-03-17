@@ -1,3 +1,4 @@
+from datetime import date
 import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -77,7 +78,7 @@ def step4(request: HttpRequest):
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):
-    json = generateJson()
+    json = generateJson(request.user)
     return render(request=request, template_name="abcd/finalGraph.html", context={"data": json})
 
 def home(request: HttpRequest):
@@ -86,19 +87,43 @@ def home(request: HttpRequest):
 
 def save_graph(request: HttpRequest):
     data = json.loads(request.POST.get('data', ''))
-    print(data)
-    
+    print(data.__class__)
+    d = json.loads(data)
+    print(d)
+    print(d.__class__)
+    nodes = d['nodeDataArray']
+    for node in nodes:
+        print(node)
+        color = node['color']
+        x_y = node['loc'].split()
+        if color == "yellow": # tags
+            target = Tags.objects.get(name=node['key'])
+        elif color == "lightblue":  # stakeholder
+            print(node['key'])
+            target = Stakeholders.objects.get(name=node['key'])
+        elif color == "red": # assets
+            target = Assets.objects.get(name=node['key'])
+        elif color == "blue": # institution
+            target = Institutions.objects.get(name=node['key'])
+        target.x_coord = x_y[0]
+        target.y_coord = x_y[1]
+        target.save()
+        print(node)
+    assocs = d['linkDataArray']
+    for assoc in assocs:
+        print(assoc)
+
     return HttpResponse(json.dumps({}),
                     content_type="application/json")
 
 
 #supporting function
-def generateJson():
+def generateJson(user):
     nodes = []
-    nodes.extend(Tags.objects.all())
-    nodes.extend(Stakeholders.objects.all())
-    nodes.extend(Stakeholders.objects.all())
-    nodes.extend(list(Stakeholders.objects.all()))
+    nodes.extend(Tags.objects.filter(owner=user))
+    nodes.extend(Stakeholders.objects.filter(owner=user))
+    nodes.extend(Assets.objects.filter(owner=user))
+    nodes.extend(Institutions.objects.filter(owner=user))
     nodes_dic = []
     nodes_dic.extend(map(lambda obj: obj.get_dict(), nodes))
     assocs = []

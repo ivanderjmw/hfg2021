@@ -93,10 +93,10 @@ class Node(models.Model):
         # null=True,
         on_delete=models.CASCADE
     )
-    x_coord = models.IntegerField(
+    x_coord = models.FloatField(
         null=True
     )
-    y_coord = models.IntegerField(
+    y_coord = models.FloatField(
         null=True
     )
 
@@ -105,7 +105,12 @@ class Stakeholders(Node):
         d = dict()
         d["key"] = self.name
         d["color"] = "lightblue"
-        return d
+        if self.x_coord == None:
+            return d
+        else:
+            coord = str(self.x_coord) + " " + str(self.y_coord)
+            d["loc"] = coord
+            return d
 
 class Tags(Node):
     details = models.TextField(
@@ -119,7 +124,12 @@ class Tags(Node):
         d = dict()
         d["key"] = self.name
         d["color"] = "yellow"
-        return d
+        if self.x_coord == None:
+            return d
+        else:
+            coord = str(self.x_coord) + " " + str(self.y_coord)
+            d["loc"] = coord
+            return d
 
 #refering to physical asset not qualities like Kindness
 class Assets(Node):
@@ -138,17 +148,14 @@ class Assets(Node):
     )
 
     def get_dict(self):
+        d = dict()
+        d["key"] = self.name
+        d["color"] = "red"
         if self.x_coord == None:
-            d = dict()
-            d["key"] = self.name
-            d["color"] = "red"
             return d
         else:
             coord = str(self.x_coord) + " " + str(self.y_coord)
-            d = dict()
-            d["key"] = self.name
-            d["color"] = "red"
-            d["coord"] = coord
+            d["loc"] = coord
             return d
     
 
@@ -174,9 +181,14 @@ class Institutions(Node):
     )
 
     def get_dict(self):
-            d = dict()
-            d["key"] = self.name
-            d["color"] = "blue"
+        d = dict()
+        d["key"] = self.name
+        d["color"] = "blue"
+        if self.x_coord == None:
+            return d
+        else:
+            coord = str(self.x_coord) + " " + str(self.y_coord)
+            d["loc"] = coord
             return d
 
 
@@ -188,8 +200,13 @@ class Community(Node):
     def get_dict(self):
         d = dict()
         d["key"] = self.name
-        d["color"] = "yellow"
-        return d
+        d["color"] = "pink"
+        if self.x_coord == None:
+            return d
+        else:
+            coord = str(self.x_coord) + " " + str(self.y_coord)
+            d["loc"] = coord
+            return d
 
 # --------------------- Relationships -------------------
 # class Relationships(models.Model):
