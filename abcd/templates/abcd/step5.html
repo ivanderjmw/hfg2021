@@ -6,12 +6,13 @@
 <style>
 body {
   background-color: #4BED93;
-  background-image: url('../../static/abcd/img/step4.png');
+  /* background-image: url('../../static/abcd/img/step4.png'); */
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: 50vw 20vh;
-  background-size: 50vh auto;  
+  background-position: 30vw 20vh;
+  background-size: 50vw auto;
 }
+
 
 .draggable {
   cursor: pointer;
@@ -113,21 +114,7 @@ small {
   const stakeholders = data["stakeholders"].map(x=>JSON.parse(x));
   const institutions = data["institutions"].map(x=>JSON.parse(x));;//["University", "Factory", "Police Headquarters"];
   const dragDropSets = initDragDropSets(institutions);
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-  }
+
   const csrftoken = getCookie('csrftoken');
 
   $(document).ready(function () {
@@ -273,5 +260,14 @@ small {
       dragDropSets[i] = set;
     });
   }
+
+
+</script>
+
+<script>
+  $('<img/>').attr('src', "../../static/abcd/img/step4.png").on('load', function() {
+   $(this).remove(); // prevent memory leaks as @benweet suggested
+   $('body').css('background-image', 'url("../../static/abcd/img/step4.png")');
+});
 </script>
 {% endblock %}

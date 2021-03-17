@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from abcd.models import *
 from abcd.forms import *
 from django.http.request import HttpRequest
@@ -145,6 +146,15 @@ def results(request: HttpRequest):
 def home(request: HttpRequest):
     return render(request=request, template_name="abcd/home.html")
 
+
+def save_graph(request: HttpRequest):
+    data = json.loads(request.POST.get('data', ''))
+    print(data)
+    
+    return HttpResponse(json.dumps({}),
+                    content_type="application/json")
+
+
 #supporting function
 def generateJson():
     nodes = []
@@ -152,8 +162,6 @@ def generateJson():
     nodes.extend(Stakeholders.objects.all())
     nodes.extend(Stakeholders.objects.all())
     nodes.extend(list(Stakeholders.objects.all()))
-    print(nodes[1].get_dict())
-    print(list(map(lambda obj: obj.get_dict(), nodes)))
     nodes_dic = []
     nodes_dic.extend(map(lambda obj: obj.get_dict(), nodes))
     assocs = []
@@ -161,9 +169,8 @@ def generateJson():
     d["class"] = "GraphLinksModel"
     d["linkLabelKeysProperty"] =  "labelKeys"
     d["nodeDataArray"] = nodes_dic
-    d["linkDataArray"] = assocs
-    print(d)
-    return d
+    json_object = json.dumps(d, indent=4)
+    return json_object
 
 def createConnString(fromItem, toItem):
     connString = "{"

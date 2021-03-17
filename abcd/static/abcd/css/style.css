@@ -1,3 +1,32 @@
+body {
+  font-family: 'rubik'!important;
+  overflow-x: hidden;
+  visibility: hidden;
+}
+
+#frame-box {
+  border-color: black!important;
+  border-radius: 8px!important;
+  border-style: solid!important;
+  border-width: 4px!important;
+  
+}
+
+.page-link.pagination-btn{
+  background-color: transparent;
+  border-color: black!important;
+  border-radius: 8px!important;
+  border-style: solid!important;
+  border-width: 4px!important;
+  color: black;
+}
+
+.page-link.pagination-btn:hover {
+  color: tomato;
+  background-color: transparent;
+  border-color: tomato!important;
+}
+
 @media screen and (min-width: 800px){
     .pagination-btn {
       border-width: 2px;
@@ -22,3 +51,4 @@
   }
   
   @media screen and (max-width: 800px){}
+  

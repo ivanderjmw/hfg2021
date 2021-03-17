@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ABCD</title>
     {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="{% static 'abcd/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'abcd/css/style.css' %}">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -19,7 +20,7 @@
 <body>
 
 <div class="container">
-  <div class="row d-block border p-5 mt-5">
+  <div class="row d-block border p-5 mt-5" id="frame-box">
     {% block content %}
     {% endblock %}
   </div>
@@ -37,15 +38,36 @@
     </nav>
     </div>
   </div>
-
-  {% load static %}
-  <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-  <script language="JavaScript" src="{% static 'abcd/js/jquery.js' %}"></script>
-  <script src="{% static 'abcd/js/jquery-ui.min.js' %}"></script>
-  <script src="{% static 'abcd/js/popper.min.js' %}"></script>
-  <script src="{% static 'abcd/js/bootstrap.min.js' %}" ></script>
-  {% block js %}
-  {% endblock %}
+{% load static %}
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<script language="JavaScript" src="{% static 'abcd/js/jquery.js' %}"></script>
+<script src="{% static 'abcd/js/popper.min.js' %}"></script>
+<script src="{% static 'abcd/js/bootstrap.min.js' %}" ></script>
+<script>
+document.addEventListener("DOMContentLoaded", $("body").css("visibility", "visible"));
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    }
+});
+</script>
+{% block js %}
+{% endblock %}
 </body>
 </html>  
 </div>

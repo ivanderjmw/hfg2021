@@ -104,8 +104,6 @@ class Stakeholders(Node):
         d = dict()
         d["key"] = self.name
         d["color"] = "lightblue"
-        print("here")
-        print(d)
         return d
 
 class Tags(Node):

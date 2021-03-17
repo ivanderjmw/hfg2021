@@ -1,5 +1,19 @@
 {% extends "abcd/stepbase.html" %}
 
+{% block header_files %}
+<style>
+  body {
+    background-color: #4EE4C3;
+    /* background-image: url('../../static/abcd/img/step3.svg'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom;  
+    background-size: 80vw auto;
+  }
+  
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="col">
   <div class="row d-block">
@@ -51,4 +65,13 @@
   <option value="Heyho">
   <option value="Heyha">
 </datalist>
+{% endblock %}
+
+{% block js %}
+<script>
+  $('<img/>').attr('src', "../../static/abcd/img/step3.svg").on('load', function() {
+   $(this).remove(); // prevent memory leaks as @benweet suggested
+   $('body').css('background-image', 'url("../../static/abcd/img/step3.svg")');
+});
+</script>
 {% endblock %}

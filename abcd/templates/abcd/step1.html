@@ -4,11 +4,16 @@
 
 {% block header_files %}
 <style>
-  body {
-    background-color:#FFD214;
-  }
-</style>
+body {
+  background-color:#FFD214;
+  /* background-image: url('../../static/abcd/img/step1.svg'); */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;  
+  background-size: 80vw auto;
+}
 
+</style>
 {% endblock %}
 
 {% block content %}
@@ -35,4 +40,13 @@
   <option value="Heyho">
   <option value="Heyha">
 </datalist>
+{% endblock %}
+
+{% block js %}
+<script>
+  $('<img/>').attr('src', "../../static/abcd/img/step1.svg").on('load', function() {
+   $(this).remove(); // prevent memory leaks as @benweet suggested
+   $('body').css('background-image', 'url("../../static/abcd/img/step1.svg")');
+});
+</script>
 {% endblock %}
