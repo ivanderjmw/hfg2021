@@ -87,19 +87,15 @@ def home(request: HttpRequest):
 
 def save_graph(request: HttpRequest):
     data = json.loads(request.POST.get('data', ''))
-    print(data.__class__)
     d = json.loads(data)
     print(d)
-    print(d.__class__)
     nodes = d['nodeDataArray']
     for node in nodes:
-        print(node)
         color = node['color']
         x_y = node['loc'].split()
         if color == "yellow": # tags
             target = Tags.objects.get(name=node['key'])
         elif color == "lightblue":  # stakeholder
-            print(node['key'])
             target = Stakeholders.objects.get(name=node['key'])
         elif color == "red": # assets
             target = Assets.objects.get(name=node['key'])
