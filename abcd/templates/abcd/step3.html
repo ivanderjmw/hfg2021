@@ -1,14 +1,54 @@
 {% extends "abcd/stepbase.html" %}
 
 {% block content %}
-<h1>What are the assets?</h1>
-<form method="post" id="addCommunityForm">
-<div class="form-group">
-{% csrf_token %}
-  <input id="asset_name" type="text" class="form-control" name="asset_name" placeholder="Enter asset name">
-  <input type="text" class="form-control" name="asset_details" placeholder="Enter asset details">
-  <input type="text" class="form-control" name="asset_address" placeholder="Enter asset address">
-  <input type="text" class="form-control" name="asset_contact" placeholder="Enter asset contact">
-  <input class="btn btn-primary" type="submit" value=Add>
+<div class="col">
+<div class="row d-block">
+  <div class="container">
+   <h1>What are the Physical Assets?</h1>
+  </div>
 </div>
+<div class="row d-block">
+  <div class="container">
+    <form method="post" id="addCommunityForm">
+      {% csrf_token %}
+    <div class="form-group">
+      <label>Asset name</label>
+      <input id="asset_name" type="text" class="form-control" name="asset_name" placeholder="Enter asset name" list="assets">
+    </div>
+    <div class="form-group">
+      <label>Asset details</label>
+      <input type="text" class="form-control" name="asset_details" placeholder="Enter asset details">
+    </div>
+    <div class="form-group">
+      <label>Asset address</label>
+      <input type="text" class="form-control" name="asset_address" placeholder="Enter asset address">
+    </div>
+    <div class="form-group">
+      <label>Asset contact</label>
+      <input type="text" class="form-control" name="asset_contact" placeholder="Enter asset contact">
+    </div>
+      <input class="btn btn-primary" type="submit" value=Add>
+    </form>
+  </div>
+</div>
+<div class="row d-block mt-3">
+  <div class="container">
+    <h2>Physical Assets</h2>
+    <ul class="list-group">
+    {% for asset in assets %}
+      <li class="list-group-item">
+        <p class="font-weight-bold">{{asset.name}}</p>
+        <p>{{asset.details}}</p>
+        <p>{{asset.address}}</p>
+        <p>{{asset.contact}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+<datalist id="assets">
+  <option value="Heyho">
+  <option value="Heyha">
+</datalist>
 {% endblock %}

@@ -1,0 +1,19 @@
+{
+  "name": "abcd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d static/abcd/js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10"
+  },
+  "dependencies": {
+    "draggable": "^4.2.0"
+  }
+}

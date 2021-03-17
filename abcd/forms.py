@@ -33,3 +33,13 @@ class addAssetForm(forms.ModelForm):
     class Meta:
         model = Assets
         fields = ('asset_name','asset_details','asset_address','asset_contact',)
+
+class addInstitutionForm(forms.ModelForm):
+    institution_name = forms.CharField(required=False, max_length=500)
+    institution_details = forms.CharField(required=False, max_length=500)
+    institution_address = forms.CharField(required=False, max_length=500)
+    institution_contact = forms.CharField(required=False, max_length=500)
+
+    class Meta:
+        model = Institutions
+        fields = ('institution_name','institution_details','institution_address','institution_contact',)

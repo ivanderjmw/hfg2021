@@ -20,12 +20,10 @@
 <body>
 {% block content %}
 {% endblock %}
-<div class="btn">
-    <button type="button" class="btn btn-outline-light">Get Started</button>
-</div>
 {% load static %}
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <script language="JavaScript" src="{% static 'abcd/js/jquery.js' %}"></script>
+<script src="{% static 'abcd/js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'abcd/js/popper.min.js' %}"></script>
 <script src="{% static 'abcd/js/bootstrap.min.js' %}" ></script>
 {% block js %}

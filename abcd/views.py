@@ -68,13 +68,76 @@ def step3(request: HttpRequest):
             temp = Assets(name=name, details=details, address=address, contact=contact, 
                 owner=request.user)
             temp.save()
-    return render(request=request, template_name="abcd/step3.html")
+
+    assets = Assets.objects.all()
+
+    return render(request=request, template_name="abcd/step3.html", context={"assets": assets})
 
 
 @login_required(login_url='/login')
 def step4(request: HttpRequest):
-    return render(request=request, template_name="abcd/step4.html")
+    form = addInstitutionForm(request.POST or None)
+    if request.method == "POST":
+        print(request.user)
+        if not form.is_valid():
+            print("invalid")
+        else:
+            name = form.cleaned_data['institution_name']
+            details = form.cleaned_data['institution_details']
+            address = form.cleaned_data['institution_address']
+            contact = form.cleaned_data['institution_contact']
+            temp = Institutions(name=name, details=details, address=address, contact=contact, 
+                owner=request.user)
+            temp.save()
 
+    institutions = Institutions.objects.all()
+    return render(request=request, template_name="abcd/step4.html", context={"institutions": institutions})
+
+@login_required(login_url='/login')
+def step5(request: HttpRequest):
+    if request.method == "POST":
+        # [{"from": "Alpha", "to": "Beta"}, {"from": "Gamma", "to": "Delta"}]
+        # from institutions to stakeholders
+        print(request.body)
+        print(json.loads(request.body).keys())
+        dataDict = json.loads(request.body)
+
+        profile = Profile.objects.get(id=request.user.id)
+        assocsString = profile.assocs
+        if assocsString == "":
+            assocsString = "[]"
+
+        for x in dataDict.keys():
+            for y in dataDict[x]:
+                assocsString = appendToStringList(
+                    assocsString, 
+                    createConnString(x, y["name"])
+                    )
+        profile.assocs = assocsString
+        profile.save()
+
+
+
+    institutions = Institutions.objects.all()
+    listInsts = []
+    for inst in institutions.iterator():
+        listInsts.append(json.dumps({
+            "name": inst.name,
+            "details": inst.details,
+            "address": inst.address,
+            "contact": inst.contact
+        }))
+
+    stakeholders = Stakeholders.objects.all()
+    listStakes = []
+    for stake in stakeholders.iterator():
+        listStakes .append(json.dumps({
+            "name": stake.name
+        }))
+
+    dataDict = {"institutions": listInsts, "stakeholders": listStakes}
+    data = json.dumps(dataDict)
+    return render(request=request, template_name="abcd/step5.html", context={"data": data})
 
 @login_required(login_url='/login')
 def results(request: HttpRequest):
@@ -130,3 +193,18 @@ def generateJson(user):
     json_object = json.dumps(d, indent=4)
     return json_object
 
+def createConnString(fromItem, toItem):
+    connString = "{"
+    connString += "from:" + "\"" + fromItem + "\""
+    connString += ","
+    connString += "to:" + "\"" + toItem + "\""
+    connString += "}"
+    return connString
+
+def appendToStringList(stringList, item):
+    if stringList == "[]":
+        return "[" + item + "]"
+
+    if stringList.find(item) >= 0:
+        return stringList
+    return stringList[:-1] + "," + item + "]"

@@ -39,7 +39,6 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-# Create your models here.
 class Profile(AbstractBaseUser, PermissionsMixin):
     """ Datamodel for user accounts. """
     email = models.EmailField(

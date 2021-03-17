@@ -1,5 +1,54 @@
 {% extends "abcd/stepbase.html" %}
 
 {% block content %}
-<h1>What are the institutions and associations involved?</h1>
+<div class="col">
+  <div class="row d-block">
+    <div class="container">
+    <h1>What are the Institutions?</h1>
+    </div>
+  </div>
+  <div class="row d-block">
+    <div class="container">
+      <form method="post" id="addCommunityForm">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Institution name</label>
+          <input id="institution_name" type="text" class="form-control" name="institution_name" placeholder="Enter institution name" list="institutions">
+        </div>
+        <div class="form-group">
+          <label>Institution details</label>
+          <input type="text" class="form-control" name="institution_details" placeholder="Enter institution details">
+        </div>
+        <div class="form-group">
+          <label>Institution address</label>
+          <input type="text" class="form-control" name="institution_address" placeholder="Enter institution address">
+        </div>
+        <div class="form-group">
+          <label>Institution contact</label>
+          <input type="text" class="form-control" name="institution_contact" placeholder="Enter institution contact">
+        </div>
+        <input class="btn btn-primary" type="submit" value=Add>
+      </form>
+    </div>
+  </div>
+  <div class="row d-block mt-3">
+    <div class="container">
+    <h2>Institutions</h2>
+      <ul class="list-group">
+      {% for institution in institutions %}
+      <li class="list-group-item">
+        <p class="font-weight-bold">{{institution.name}}</p>
+        <p>{{institution.details}}</p>
+        <p>{{institution.address}}</p>
+        <p>{{institution.contact}}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+<datalist id="institutions">
+  <option value="Heyho">
+  <option value="Heyha">
+</datalist>
 {% endblock %}

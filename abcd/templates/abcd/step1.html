@@ -1,16 +1,38 @@
 {% extends "abcd/stepbase.html" %}
 
+
+
+{% block header_files %}
+<style>
+  body {
+    background-color:#FFD214;
+  }
+</style>
+
+{% endblock %}
+
 {% block content %}
-<<<<<<< HEAD
-{% endblock %}
-=======
+<div class="col">
+  <div class="row">
 <h1>Tell us about your community. Where is it?</h1>
-<form method="post" id="addCommunityForm">
-<div class="form-group">
-{% csrf_token %}
-  <input id="community_addr" type="text" class="form-control" name="community_addr" placeholder="Enter location">
-  <input class="btn btn-primary" type="submit" value=Add>
 </div>
+<div class="row">
+<div class="container">
+  <form method="post" id="addCommunityForm">
+{% csrf_token %}
+<div class="form-group">
+  <label>Community Location</label>
+  <input id="community_addr" type="text" class="form-control" name="community_addr" placeholder="Enter location" list="locations">
+</div>
+<input class="btn btn-primary" type="submit" value=Add>
+
 </form>
+</div>
+</div>
+</div>
+
+<datalist id="locations">
+  <option value="Heyho">
+  <option value="Heyha">
+</datalist>
 {% endblock %}
->>>>>>> 3bf0f0bc0d7bb400429a8cc718bfd3e4f0c80001
