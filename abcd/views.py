@@ -118,7 +118,7 @@ def step5(request: HttpRequest):
 
 
 
-    institutions = Institutions.objects.all()
+    institutions = Institutions.objects.all().filter(owner__id=request.user.id)
     listInsts = []
     for inst in institutions.iterator():
         listInsts.append(json.dumps({
@@ -128,10 +128,11 @@ def step5(request: HttpRequest):
             "contact": inst.contact
         }))
 
-    stakeholders = Stakeholders.objects.all()
+    stakeholders = Stakeholders.objects.all().filter(owner__id=request.user.id)
     listStakes = []
+    
     for stake in stakeholders.iterator():
-        listStakes .append(json.dumps({
+        listStakes.append(json.dumps({
             "name": stake.name
         }))
 
