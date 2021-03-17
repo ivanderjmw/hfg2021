@@ -6,6 +6,7 @@
 <div id="myDiagramDiv" style="border: solid 1px blue; width:400px; height:550px"></div>
 <div id="storage" value="{{data}}">
 <script>
+
   function gen_graph(associations, strenghts, qualities, possesses, belongs, owns) {
     return null;
   }
@@ -27,17 +28,20 @@
         $(go.Shape)  // the link shape, default black stroke
     );
     text = document.getElementById('storage').getAttribute('value');
-    console.log(text)
     json = JSON.parse(text)
     diagram.model = go.Model.fromJson(json);
 
   function gen() {
-    text = document.getElementById('storage').getAttribute('value');
-    console.log(String(text));
-    json = JSON.parse(text)
-    console.log(json);
-    //console.log(diagram.model.toJson());
-    return null;
+    json = diagram.model.toJson();
+    $.ajax({
+        url: "/results/sendJson/",
+        type: 'POST',
+        async: false,
+        data: {'data': JSON.stringify(json)},
+        success:function(data) {
+        }
+    });
+    return true;
   }
 </script>
 {% endblock %}

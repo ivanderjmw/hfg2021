@@ -111,27 +111,8 @@ This is the body.
         e.diagram.model.setCategoryForLinkData(link.data, (linktolink ? "linkToLink" : ""));
       }
 
-    var data = { "class": "go.GraphLinksModel",
-  "linkLabelKeysProperty": "labelKeys",
-  "nodeDataArray": [
-{"key":"Alpha", "color":"lightblue", "loc":"29 14"},
-{"key":"Beta", "color":"orange", "loc":"129 14"},
-{"key":"Gamma", "color":"lightgreen", "loc":"29 106"},
-{"key":"Delta", "color":"pink", "loc":"129 106"},
-{"key":"A-B", "category":"LinkLabel" },
-{"key":"G-D", "category":"LinkLabel" },
-{"key":"A-G", "category":"LinkLabel" },
-{"key":"A-G-D", "category":"LinkLabel" },
-{"key":"A-B-G-D", "category":"LinkLabel" }
- ],
-  "linkDataArray": [
-{"from":"Alpha", "to":"Beta", "labelKeys":[ "A-B" ]},
-{"from":"Gamma", "to":"Delta", "labelKeys":[ "G-D" ]},
-{"from":"Alpha", "to":"Gamma", "labelKeys":[ "A-G" ]},
-{"from":"Alpha", "to":"G-D", "labelKeys":[ "A-G-D" ], "category":"linkToLink"},
-{"from":"A-B", "to":"G-D", "labelKeys":[ "A-B-G-D" ], "category":"linkToLink"}
- ]}
-          myDiagram.model = data;
+    var data = {'class': 'GraphLinksModel', 'linkLabelKeysProperty': 'labelKeys', 'nodeDataArray': [{'key': 'da', 'color': 'yellow'}, {'key': 'sa', 'color': 'lightblue'}, {'key': 'sa', 'color': 'lightblue'}, {'key': 'sa', 'color': 'lightblue'}], 'linkDataArray': []}
+          myDiagram.model = go.Model.fromJson(data);
 
   function gen() {
     return diagram.model.toJson();
