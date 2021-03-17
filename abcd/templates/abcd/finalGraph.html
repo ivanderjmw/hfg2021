@@ -4,7 +4,7 @@
 <h1>Here's your connection graph</h1>
 <button onclick="saveGraph()">Save graph</button>
 <div id="myDiagramDiv" class="canvas"></div>
-<div id="storage" value="{{data}}">
+<div id="storage" value="{{data}}"></div>
 <script>
       // source: https://github.com/NorthwoodsSoftware/GoJS/blob/master/samples/linksToLinks.html
       var $ = go.GraphObject.make;
@@ -86,9 +86,9 @@
 
       function load() {
         text = document.getElementById('storage').getAttribute('value');
-        json = JSON.parse(text)
-        console.log("HERE")
-        console.log(json)
+        json = JSON.parse(text);
+        console.log("HERE");
+        console.log(json);
         myDiagram.model = go.Model.fromJson(json);
       }
 
