@@ -52,12 +52,13 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2'
 )
 
-SITE_ID = 2
+SITE_ID = 0 # CHANGE THIS ACCORDING TO DJANGO DATA https://stackoverflow.com/questions/15409366/django-socialapp-matching-query-does-not-exist
 
 LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/"
 
+# https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
