@@ -23,13 +23,13 @@ body {
 </div>
 <div class="row">
 <div class="container">
-  <form method="post" id="addCommunityForm">
+  <form method="post" id="addCommunityForm" onsubmit="addCommunity(event)">
 {% csrf_token %}
 <div class="form-group">
   <label>Community Location</label>
   <input id="community_addr" type="text" class="form-control" name="community_addr" placeholder="Enter location" list="locations">
 </div>
-<input class="btn btn-primary" type="submit" value=Add>
+<input class="btn btn-primary" type="submit">
 
 </form>
 </div>
@@ -40,6 +40,50 @@ body {
   <option value="Heyho">
   <option value="Heyha">
 </datalist>
+
+<script>
+  function addCommunity() {
+    event.preventDefault()
+    location_addr = $("#community_addr").val()
+    console.log(location_addr)
+    $.ajax({
+            url: "/community/",
+            type: 'POST',
+            async: false,
+            data: {'community_addr': location_addr},
+            success:function(data) {
+              location.reload();
+            }
+        });
+  }
+  function deleteCommunity(id) {
+        $.ajax({
+            url: "/community/",
+            type: 'DELETE',
+            async: false,
+            data: {'id': id},
+            success:function(data) {
+              location.reload();
+            }
+        });
+        return true;
+      }
+</script>
+
+<div class="container">
+  <h2>Communities</h2>
+    <ul class="list-group">
+    {% for comm in community %}
+    <li class="list-group-item">
+      <p class="font-weight-bold">{{institution.name}}</p>
+      <p>{{comm.location}}</p>
+      <p>{{comm.id}}</p>
+      <button onclick="deleteCommunity('{{comm.id}}')">Delete</button>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
 {% endblock %}
 
 {% block js %}

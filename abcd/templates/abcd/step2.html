@@ -56,8 +56,16 @@
     {{ form2.as_p }}
     <button name="htmlsubmitbutton2" class="btn">Add</button>
     </form> -->
+
   
   </div>
+  {% for s in individuals %}
+    <li class="list-group-item">
+      <p class="font-weight-bold">{{institution.name}}</p>
+      <p>{{s.name}}</p>
+      <button onclick="deleteStakeholder('{{s.id}}')">Delete</button>
+    </li>
+    {% endfor %}
 </div>
 </div>
 
@@ -69,5 +77,18 @@
    $(this).remove(); // prevent memory leaks as @benweet suggested
    $('body').css('background-image', 'url("../../static/abcd/img/step2.svg")');
 });
+
+function deleteStakeholder(id) {
+  $.ajax({
+            url: "/individuals/",
+            type: 'DELETE',
+            async: false,
+            data: {'id': id},
+            success:function(data) {
+              location.reload();
+            }
+        });
+        return true;
+}
 </script>
 {% endblock %}

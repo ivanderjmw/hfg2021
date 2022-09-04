@@ -1,7 +1,7 @@
 from datetime import date
 import json
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
 from abcd.models import *
 from abcd.forms import *
 from django.http.request import HttpRequest
@@ -14,14 +14,22 @@ from django.shortcuts import render
 def step1(request: HttpRequest):
     form = addCommunityForm(request.POST or None)
     if request.method == "POST":
-        if not form.is_valid():
-            print("invalid")
-        else:
-            addr = form.cleaned_data['community_addr']
-            temp = Community(name=addr, owner=request.user, location=addr)
+        commaddr = QueryDict(request.body).get('community_addr', '')
+        try:
+            temp = Community(name=commaddr, owner=request.user, location=commaddr)
             temp.save()
+        except Exception as e:
+            return HttpResponse(400)
+
+    if request.method == "DELETE":
+        commid = QueryDict(request.body).get('id', '')
+        print(commid)
+        communities = Community.objects.filter(id=commid).delete()
+        return HttpResponse(200)
+
+    communities = Community.objects.filter(owner=request.user)
     return render(request=request, template_name="abcd/step1.html",
-                context={"form": form})
+                context={"form": form, "community": communities})
 
 
 @login_required(login_url='/login')
@@ -49,6 +57,12 @@ def step2(request: HttpRequest):
                 name = form.cleaned_data['individual_name']
                 temp = Stakeholders(name=name, owner=request.user)
                 temp.save()
+    if request.method == "DELETE":
+        individ = QueryDict(request.body).get('id', '')
+        print(individ)
+        indivs = Stakeholders.objects.filter(id=individ).delete()
+        return HttpResponse(200)
+
     return render(request=request, template_name="abcd/step2.html",
                   context={"form": form, "form2":form2, "tags": tags, "individuals": stakeholders})
 
