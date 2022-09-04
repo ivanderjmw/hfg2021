@@ -4,6 +4,10 @@ body {
   visibility: hidden;
 }
 
+ul li {
+  background-color:rgba(255, 255, 255, 0.1)!important;
+}
+
 #frame-box {
   border-color: black!important;
   border-radius: 8px!important;
